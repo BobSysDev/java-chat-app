@@ -26,12 +26,20 @@ public class MessageLog
     return instance;
   }
 
-  public void addLog(String content, String sender){
-    long timestamp =  Message.getCurrentTimestamp();
+  
+  public void addLog(String content, String sender, long timestamp){
     Message message = new Message(content, sender, timestamp);
     this.logs.add(message);
     addToFile(message);
   }
+//method for testing without timestamp as a parameter
+  public void addLog(String content, String sender){
+    long timestamp = TimestampManipulation.getCurrentTimestamp();
+    Message message = new Message(content, sender, timestamp);
+    this.logs.add(message);
+    addToFile(message);
+  }
+
 
   private void addToFile(Message message){
     if(message==null){
@@ -39,7 +47,7 @@ public class MessageLog
     }
     BufferedWriter out = null;
     try{
-      String filename = "Log-"+message.convertTimestampToDate()+".log";
+      String filename = "Log-"+TimestampManipulation.convertTimestampToDate(message.getTimestamp())+".log";
       out = new BufferedWriter(new FileWriter(filename, true));
     }
     catch (Exception e) {
