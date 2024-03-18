@@ -49,6 +49,6 @@ public class Message
     if(timestamp == -1){
       return "[" + sender + "]: " + content;
     }
-    return "[" + TimestampManipulation.convertTimestampToTime(timestamp) + " | " + sender + "]: " + content;
+    return "[" + TimestampManipulation.convertTimestampToTime(timestamp) + "][" + sender + "]: " + content;
   }
 }
