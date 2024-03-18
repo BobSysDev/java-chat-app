@@ -45,18 +45,10 @@ public class Message
     this.timestamp = timestamp;
   }
 
-  public static String timestampToTimeConvert(long timestamp){
-    return new java.util.Date((long) timestamp * 1000).toString();
-  }
-
-  public static long getCurrentTimestamp(){
-    return System.currentTimeMillis() / 1000L;
-  }
-
   @Override public String toString(){
     if(timestamp == -1){
       return "[" + sender + "]: " + content;
     }
-    return "[" + timestamp + " | " + sender + "]: " + content;
+    return "[" + TimestampManipulation.convertTimestampToTime(timestamp) + " | " + sender + "]: " + content;
   }
 }
