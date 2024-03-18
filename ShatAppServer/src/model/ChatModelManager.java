@@ -22,7 +22,7 @@ public class ChatModelManager implements ChatModel{
 
     @Override
     public void addMessageLog(Message message, String ip) {
-       messageLog.addLog(message);
+       messageLog.addLog(message, ip);
        propertyChangeSupport.firePropertyChange("log", "", message);
        propertyChangeSupport.firePropertyChange("log", "", ip);
     }

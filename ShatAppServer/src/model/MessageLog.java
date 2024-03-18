@@ -46,7 +46,6 @@ public class MessageLog
     addToFile(message, ip);
   }
 
-
   private void addToFile(Message message, String ip){
     if(message==null){
       return;
