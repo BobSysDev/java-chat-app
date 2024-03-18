@@ -17,5 +17,6 @@ public class MessageTest
     System.out.println(TimestampManipulation.convertTimestampToTime(message.getTimestamp()));
     System.out.println(TimestampManipulation.convertTimestampToDate(message.getTimestamp()));
     System.out.println(TimestampManipulation.convertTimestampCustom(message.getTimestamp(), "MM-dd"));
+
   }
 }
