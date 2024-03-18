@@ -7,5 +7,6 @@ public interface ChatModel extends UnnamedPropertyChangeSubject{
 //    String getSender();
 //    String getTimestamp();
 
-    void addMessageLog(Message message);
+    void addMessageLog(Message message, String ip);
+
 }

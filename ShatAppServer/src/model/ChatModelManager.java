@@ -7,7 +7,6 @@ public class ChatModelManager implements ChatModel{
     private PropertyChangeSupport propertyChangeSupport;
     private MessageLog messageLog;
 
-
     public ChatModelManager() {
         this.messageLog = MessageLog.getInstance();
         this.propertyChangeSupport = new PropertyChangeSupport(this);
@@ -22,8 +21,9 @@ public class ChatModelManager implements ChatModel{
     }
 
     @Override
-    public void addMessageLog(Message message) {
+    public void addMessageLog(Message message, String ip) {
        messageLog.addLog(message);
        propertyChangeSupport.firePropertyChange("log", "", message);
+       propertyChangeSupport.firePropertyChange("log", "", ip);
     }
 }
