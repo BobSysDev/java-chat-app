@@ -23,5 +23,8 @@ public class MessageLog
     return instance;
   }
 
-  public void addLog(String content, String sender, Message.get)
+  public void addLog(String content, String sender){
+    long timestamp =  Message.getCurrentTimestamp;
+    Message message = new Message(content, sender, timestamp);
+  }
 }
