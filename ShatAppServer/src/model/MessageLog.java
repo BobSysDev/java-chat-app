@@ -26,13 +26,19 @@ public class MessageLog
     return instance;
   }
 
-  
+
   public void addLog(String content, String sender, long timestamp){
     Message message = new Message(content, sender, timestamp);
     this.logs.add(message);
     addToFile(message);
   }
-//method for testing without timestamp as a parameter
+//message as a parameter
+  public void addLog(Message m){
+    this.logs.add(m);
+    addToFile(m);
+  }
+
+  //method for testing without timestamp as a parameter
   public void addLog(String content, String sender){
     long timestamp = TimestampManipulation.getCurrentTimestamp();
     Message message = new Message(content, sender, timestamp);
