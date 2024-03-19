@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 import com.google.gson.Gson;
+import model.Message;
+import model.TimestampManipulation;
 
 public class MessageClient
 {
@@ -38,10 +40,19 @@ public class MessageClient
     }
   }
   private void execute(){
-    System.out.println("W");
+    System.out.println("Now you can chat with others!");
+    System.out.print("Your name: ");
+    String username = input.nextLine();
     while(running){
       String chat = input.nextLine();
-      out.println(chat);
+      if(chat.equals("/online")){
+        out.println(chat);
+      }
+      else {
+        Message m = new Message(chat,username, TimestampManipulation.getCurrentTimestamp());
+        String json = gson.toJson(m);
+        out.println(json);
+      }
     }
   }
 }

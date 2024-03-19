@@ -15,6 +15,16 @@ public class MessageClientReader implements Runnable
 
   @Override public void run()
   {
-
+    while(true){
+      try
+      {
+        String serverReply = in.readLine();
+        System.out.println("Server> "+serverReply);
+      }
+      catch (IOException e)
+      {
+        throw new RuntimeException(e);
+      }
+    }
   }
 }
