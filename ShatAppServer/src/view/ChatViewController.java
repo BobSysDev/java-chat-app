@@ -15,11 +15,7 @@ public class ChatViewController {
 
     @FXML private ListView<String> chatList;
     @FXML private Label onlineCountLabel;
-    @FXML private Button refreshButton;
-    @FXML private Button settingsButton;
-    @FXML private Button logButton;
     @FXML private TextField messageTextField;
-    @FXML private Button sendButton;
 
     public void init(ViewHandler view, ChatViewModel viewModel, Region root) {
         this.view = view;
@@ -27,8 +23,12 @@ public class ChatViewController {
         this.viewModel = viewModel;
     }
 
-    @FXML public void refreshButtonPressed() {}
-    @FXML public void settingsButtonPressed() {}
+    @FXML public void refreshButtonPressed() {
+        view.openView("chat");
+    }
+    @FXML public void settingsButtonPressed() {
+        view.openView("settings");
+    }
     @FXML public void logButtonPressed() {}
     @FXML public void sendButtonPressed() {}
     @FXML public void sendButtonOnEnterPressed() {}
