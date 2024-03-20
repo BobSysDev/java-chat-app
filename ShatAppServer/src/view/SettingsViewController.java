@@ -6,12 +6,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import javafx.event.ActionEvent;
 
-import viewmodel.ChatViewModel;
+import viewmodel.SetUsernameViewModel;
 
 public class SettingsViewController {
     private ViewHandler view;
     private Region root;
-    private ChatViewModel viewModel;
+    private SetUsernameViewModel viewModel;
 
     @FXML
     private TextField usernameTextField;
@@ -21,7 +21,7 @@ public class SettingsViewController {
     private TextField portTextField;
 
 
-    public void init(ViewHandler view, ChatViewModel viewModel, Region root) {
+    public void init(ViewHandler view, SetUsernameViewModel viewModel, Region root) {
         this.view = view;
         this.root = root;
         this.viewModel = viewModel;
