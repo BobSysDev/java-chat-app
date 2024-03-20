@@ -35,13 +35,19 @@ public class ChatServer
             try{
                 socket = chatSocket.accept();
                 System.out.println( socket.hashCode()+" connected!");
-                Thread clientThread = new Thread(new ChatClientHandler(socket,chatModel,this));
+                ChatClientHandler handler = new ChatClientHandler(socket,chatModel,this);
+                handlers.add(handler);
+                Thread clientThread = new Thread(new ChatClientHandler(socket,chatModel, this));
                 clientThread.start();
             }
             catch (Exception e){
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public int getHandlersSize(){
+        return handlers.size();
     }
 
 }

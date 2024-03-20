@@ -12,7 +12,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   private PrintWriter out;
   private String ip;
   private ChatModel chatModel;
-
+  private ChatServer server;
 
 
   public ChatClientHandler(Socket socket, ChatModel chatModel, ChatServer server){
@@ -20,6 +20,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
       this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       this.out = new PrintWriter(socket.getOutputStream(), true);
       this.ip = socket.getInetAddress().getHostAddress();
+      this.server = server;
     }
     catch(IOException e){
       e.printStackTrace();
@@ -38,7 +39,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
       try{
         String incoming = in.readLine();
         if(incoming.equals("/online")){
-          //TODO: HANDLE
+          out.println("Server> Number of connected users: "+server.getHandlersSize());
         }
         else{
           Message message = gson.fromJson(incoming, Message.class);
