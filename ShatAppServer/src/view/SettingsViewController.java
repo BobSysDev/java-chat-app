@@ -26,12 +26,13 @@ public class SettingsViewController {
         this.root = root;
         this.viewModel = viewModel;
 
-        //usernameTextField.textProperty().bindBidirectional(viewModel.getUsernameProperty());
+        usernameTextField.textProperty().bindBidirectional(viewModel.getUsernameProperty());
+        ipTextField.textProperty().bindBidirectional(viewModel.getIpProperty());
+        portTextField.textProperty().bindBidirectional(viewModel.getPortProperty());
     }
 
     @FXML
     public void applyButtonPressed() {
-
         view.openView("chat");
     }
 
