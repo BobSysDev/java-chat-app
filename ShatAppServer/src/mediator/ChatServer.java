@@ -34,7 +34,6 @@ public class ChatServer
             Socket socket = null;
             try{
                 socket = chatSocket.accept();
-                System.out.println( socket.hashCode()+" connected!");
                 ChatClientHandler handler = new ChatClientHandler(socket,chatModel,this);
                 handlers.add(handler);
                 Thread clientThread = new Thread(handler);

@@ -43,7 +43,9 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
         }
         else{
           Message message = gson.fromJson(incoming, Message.class);
+          message.setTimestamp(TimestampManipulation.getCurrentTimestamp());
           chatModel.addMessageLog(message, ip);
+          System.out.println(ip+"> "+message.toString());
           //System.out.println("Received a message from [" + message.getSender() + "]. Broadcasting...");
         }
       }
@@ -56,7 +58,6 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     Message m = (Message)evt.getNewValue();
-    System.out.println(ip+"> "+m.toString());
     out.println(m.toString());
   }
 }

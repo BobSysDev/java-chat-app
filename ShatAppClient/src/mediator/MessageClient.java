@@ -50,6 +50,8 @@ public class MessageClient
     System.out.println("Now you can chat with others!");
     System.out.print("Your name: ");
     String username = input.nextLine();
+    Message connected = new Message("<has connected!>",username);
+    out.println(connected);
     while(running){
       System.out.print("Your message: ");
       String chat = input.nextLine();
@@ -57,7 +59,7 @@ public class MessageClient
         out.println(chat);
       }
       else {
-        Message m = new Message(chat,username, TimestampManipulation.getCurrentTimestamp());
+        Message m = new Message(chat,username);
         String json = gson.toJson(m);
         out.println(json);
       }
