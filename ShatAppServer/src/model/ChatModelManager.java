@@ -32,5 +32,5 @@ public class ChatModelManager implements ChatModel{
     {
         return 0;
     }
-    
+
 }

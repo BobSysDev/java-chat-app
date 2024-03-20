@@ -2,7 +2,9 @@
 package mediator;
 
 import model.ChatModel;
+import model.ChatModelManager;
 import model.Message;
+import model.MessageLog;
 import utility.UnnamedPropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
@@ -14,14 +16,17 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class ChatServer{
+public class ChatServer {
     private ServerSocket chatSocket;
     private ChatModel chatModel;
+    private static ChatServer instance;
     private ArrayList<ChatClientHandler> handlers;
+    private static Object lock = new Object();
 
 
 
-    public ChatServer(ChatModel chatModel, int port)  throws IOException
+
+    private ChatServer(ChatModel chatModel, int port)  throws IOException
     {
         this.chatModel = chatModel;
         this.chatSocket = new ServerSocket(port);
@@ -33,6 +38,18 @@ public class ChatServer{
 
         execute();
 
+    }
+
+    public static ChatServer getInstance() throws IOException
+    {
+        if(instance==null){
+            synchronized (lock){
+                if (instance==null){
+                    instance = new ChatServer(new ChatModelManager(),5678);
+                }
+            }
+        }
+        return instance;
     }
 
     private void execute(){
@@ -57,5 +74,20 @@ public class ChatServer{
 //        propertyChangeSupport.firePropertyChange("ONLINE",handlers.size(),null);
         return handlers.size();
     }
+
+//    @Override public void propertyChange(PropertyChangeEvent evt)
+//    {
+//        if(evt.getPropertyName().equals("ONLINE_REQUEST")){
+//            propertyChangeSupport.firePropertyChange("ONLINE_REPLY",getHandlersSize(),null);
+//        }
+//    }
+
+//    public void addListener(java.beans.PropertyChangeListener listener) {
+//        propertyChangeSupport.addPropertyChangeListener(listener);
+//    }
+//
+//    public void removeListener(java.beans.PropertyChangeListener listener) {
+//        propertyChangeSupport.removePropertyChangeListener(listener);
+//    }
 }
 

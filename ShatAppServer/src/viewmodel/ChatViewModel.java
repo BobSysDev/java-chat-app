@@ -13,18 +13,21 @@ import model.ChatModel;
 public class ChatViewModel implements PropertyChangeListener{
 
   private ChatModel model;
+  private ChatModel model2;
   private static ObservableList<SimpleMessageViewModel> messages;
   private IntegerProperty onlineCountLabel;
 
 
-  public ChatViewModel(ChatModel model){
+  public ChatViewModel(ChatModel model, ChatModel model2){
     this.model = model;
+    this.model2 = model2;
     messages = FXCollections.observableArrayList();
-    this.onlineCountLabel = new SimpleIntegerProperty(model.getNumberOfConnectedUsers());
+    this.model.getNumberOfConnectedUsers();
+    this.onlineCountLabel = new SimpleIntegerProperty(0);
     model.addListener(this);
   }
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-
+    this.onlineCountLabel.set(model2.getNumberOfConnectedUsers());
   }
 }
