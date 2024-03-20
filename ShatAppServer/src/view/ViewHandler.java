@@ -12,7 +12,7 @@ public class ViewHandler
     private Scene currentScene;
 
     ChatViewController chatViewController;
-    SettingsViewController settingsViewController;
+   // SettingsViewController settingsViewController;
 
     public ViewHandler(ViewModelFactory factory){
         this.factory = factory;
@@ -60,7 +60,7 @@ public class ViewHandler
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource(fxmlFile));
             root = loader.load();
-            settingsViewController = loader.getController();
+            //settingsViewController = loader.getController();
             // settingsViewController.init(this, factory.getSettingsViewModel(), root);
         }
         catch (Exception e) {
