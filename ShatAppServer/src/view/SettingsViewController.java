@@ -20,12 +20,13 @@ public class SettingsViewController {
     @FXML
     private TextField portTextField;
 
+
     public void init(ViewHandler view, ChatViewModel viewModel, Region root) {
         this.view = view;
         this.root = root;
         this.viewModel = viewModel;
 
-
+        //usernameTextField.textProperty().bindBidirectional(viewModel.getUsernameProperty());
     }
 
     @FXML
