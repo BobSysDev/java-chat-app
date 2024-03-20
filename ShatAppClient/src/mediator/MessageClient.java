@@ -39,11 +39,19 @@ public class MessageClient
       e.printStackTrace();
     }
   }
+
+//  public synchronized void receive(String s)
+//  {
+//      receivedString = s;
+//      notify();
+//  }
+
   private void execute(){
     System.out.println("Now you can chat with others!");
     System.out.print("Your name: ");
     String username = input.nextLine();
     while(running){
+      System.out.print("Your message: ");
       String chat = input.nextLine();
       if(chat.equals("/online")){
         out.println(chat);

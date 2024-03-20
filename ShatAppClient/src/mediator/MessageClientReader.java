@@ -20,6 +20,7 @@ public class MessageClientReader implements Runnable
       {
         String serverReply = in.readLine();
         System.out.println("Server> "+serverReply);
+        messageClient.receive(serverReply);
       }
       catch (IOException e)
       {
