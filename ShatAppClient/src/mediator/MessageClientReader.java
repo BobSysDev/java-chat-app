@@ -2,6 +2,7 @@ package mediator;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.net.SocketException;
 
 public class MessageClientReader implements Runnable
 {
@@ -21,6 +22,10 @@ public class MessageClientReader implements Runnable
         String serverReply = in.readLine();
         System.out.println("Server> "+serverReply);
         //messageClient.receive(serverReply);
+      }
+      catch (SocketException e){
+        messageClient.dropConnection();
+        break;
       }
       catch (IOException e)
       {
