@@ -7,9 +7,11 @@ public class ChatModelManager implements ChatModel{
     private PropertyChangeSupport propertyChangeSupport;
     private MessageLog messageLog;
 
+
     public ChatModelManager() {
         this.messageLog = MessageLog.getInstance();
         this.propertyChangeSupport = new PropertyChangeSupport(this);
+
     }
 
     public void addListener(java.beans.PropertyChangeListener listener) {
@@ -25,4 +27,10 @@ public class ChatModelManager implements ChatModel{
        messageLog.addLog(message, ip);
        propertyChangeSupport.firePropertyChange("ADD", ip, message);
     }
+
+    @Override public int getNumberOfConnectedUsers()
+    {
+        return 0;
+    }
+
 }

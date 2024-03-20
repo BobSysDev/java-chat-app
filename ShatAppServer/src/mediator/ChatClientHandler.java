@@ -57,7 +57,10 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
 
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-    Message m = (Message)evt.getNewValue();
-    out.println(m.toString());
+    if(evt.getPropertyName().equals("ADD")){
+      Message m = (Message)evt.getNewValue();
+      out.println(m.toString());
+
+    }
   }
 }
