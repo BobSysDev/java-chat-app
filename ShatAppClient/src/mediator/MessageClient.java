@@ -51,7 +51,8 @@ public class MessageClient
     System.out.print("Your name: ");
     String username = input.nextLine();
     Message connected = new Message("<has connected!>",username);
-    out.println(connected);
+    String jsonConnect = gson.toJson(connected);
+    out.println(jsonConnect);
     while(running){
       System.out.print("Your message: ");
       String chat = input.nextLine();
