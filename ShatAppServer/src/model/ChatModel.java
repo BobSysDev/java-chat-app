@@ -1,13 +1,14 @@
 package model;
 
-import mediator.ChatServer;
 import utility.UnnamedPropertyChangeSubject;
-public interface ChatModel extends UnnamedPropertyChangeSubject{
 
-//    String getMessage();
-//    String getSender();
-//    String getTimestamp();
 
-    void addMessageLog(Message message, String ip);
-    int getNumberOfConnectedUsers();
+
+public abstract class ChatModel implements UnnamedPropertyChangeSubject
+{
+        public void addMessageLog(Message message, String ip){}
+        public int getNumberOfConnectedUsers(){
+            return 0;
+        }
+
 }
