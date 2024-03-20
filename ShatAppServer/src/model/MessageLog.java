@@ -54,7 +54,7 @@ public class MessageLog
     try{
       String filename = "Log-"+TimestampManipulation.convertTimestampToDate(message.getTimestamp())+".log";
       out = new BufferedWriter(new FileWriter(filename, true));
-      out.write("["+TimestampManipulation.convertTimestampToTime(message.getTimestamp())+"]["+ip+"] "+message.getSender()+": "+message.getContent()+"\n");
+      out.write("["+TimestampManipulation.convertTimestampToTime(message.getTimestamp())+"]["+ip+"] "+message.getSender()+": "+message.getContent()+"\n"  );
     }
     catch (Exception e) {
       e.printStackTrace();
