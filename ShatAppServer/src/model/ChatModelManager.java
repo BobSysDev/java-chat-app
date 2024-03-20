@@ -2,7 +2,7 @@ package model;
 
 import java.beans.PropertyChangeSupport;
 
-public class ChatModelManager extends ChatModel{
+public class ChatModelManager implements ChatModel{
 
     private PropertyChangeSupport propertyChangeSupport;
     private MessageLog messageLog;
@@ -28,9 +28,9 @@ public class ChatModelManager extends ChatModel{
        propertyChangeSupport.firePropertyChange("ADD", ip, message);
     }
 
-//    @Override public int getNumberOfConnectedUsers()
-//    {
-//        return 0;
-//    }
-
+    @Override public int getNumberOfConnectedUsers()
+    {
+        return 0;
+    }
+    
 }

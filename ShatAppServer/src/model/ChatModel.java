@@ -4,11 +4,9 @@ import utility.UnnamedPropertyChangeSubject;
 
 
 
-public abstract class ChatModel implements UnnamedPropertyChangeSubject
+public interface ChatModel extends UnnamedPropertyChangeSubject
 {
-        public void addMessageLog(Message message, String ip){}
-        public int getNumberOfConnectedUsers(){
-            return 0;
-        }
+        void addMessageLog(Message message, String ip);
+        int getNumberOfConnectedUsers();
 
 }

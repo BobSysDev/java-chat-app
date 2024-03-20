@@ -2,6 +2,7 @@
 package mediator;
 
 import model.ChatModel;
+import model.Message;
 import utility.UnnamedPropertyChangeSubject;
 
 import java.beans.PropertyChangeEvent;
@@ -13,7 +14,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class ChatServer extends ChatModel{
+public class ChatServer{
     private ServerSocket chatSocket;
     private ChatModel chatModel;
     private ArrayList<ChatClientHandler> handlers;
@@ -56,27 +57,5 @@ public class ChatServer extends ChatModel{
 //        propertyChangeSupport.firePropertyChange("ONLINE",handlers.size(),null);
         return handlers.size();
     }
-
-    @Override public int getNumberOfConnectedUsers(){
-        return getHandlersSize();
-    }
-    @Override public void addListener(PropertyChangeListener listener)
-    {
-
-    }
-
-    @Override public void removeListener(PropertyChangeListener listener)
-    {
-
-    }
-
-    //    public void addListener(java.beans.PropertyChangeListener listener) {
-//        propertyChangeSupport.addPropertyChangeListener(listener);
-//    }
-//
-//    public void removeListener(java.beans.PropertyChangeListener listener) {
-//        propertyChangeSupport.removePropertyChangeListener(listener);
-//    }
-
 }
 
