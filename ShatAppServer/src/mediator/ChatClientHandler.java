@@ -39,12 +39,12 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
       try{
         String incoming = in.readLine();
         if(incoming.equals("/online")){
-          out.println("Server> Number of connected users: "+server.getHandlersSize());
+          out.println(server.getHandlersSize());
         }
         else{
           Message message = gson.fromJson(incoming, Message.class);
           chatModel.addMessageLog(message, ip);
-          System.out.println("Received a message from [" + message.getSender() + "]. Broadcasting...");
+          //System.out.println("Received a message from [" + message.getSender() + "]. Broadcasting...");
         }
       }
       catch (IOException e){
