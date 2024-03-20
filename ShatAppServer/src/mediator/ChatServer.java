@@ -37,7 +37,7 @@ public class ChatServer
                 System.out.println( socket.hashCode()+" connected!");
                 ChatClientHandler handler = new ChatClientHandler(socket,chatModel,this);
                 handlers.add(handler);
-                Thread clientThread = new Thread(new ChatClientHandler(socket,chatModel, this));
+                Thread clientThread = new Thread(handler);
                 clientThread.start();
             }
             catch (Exception e){
