@@ -31,6 +31,9 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
 
   }
 
+  public String getIp(){
+    return ip;
+  }
   @Override public void run()
   {
     boolean running = true;

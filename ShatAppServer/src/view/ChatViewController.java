@@ -21,15 +21,22 @@ public class ChatViewController {
         this.view = view;
         this.root = root;
         this.viewModel = viewModel;
+
+        this.chatList.setItems(viewModel.getMessages());
+        this.onlineCountLabel.textProperty().bind(viewModel.getOnlineCountLabel());
     }
 
     @FXML public void refreshButtonPressed() {
-        view.openView("chat");
+        //view.openView("chat");
+        viewModel.refresh();
     }
     @FXML public void settingsButtonPressed() {
         view.openView("settings");
     }
     @FXML public void logButtonPressed() {}
-    @FXML public void sendButtonPressed() {}
+    @FXML public void sendButtonPressed() {
+        String content = messageTextField.getText();
+
+    }
     @FXML public void sendButtonOnEnterPressed() {}
 }

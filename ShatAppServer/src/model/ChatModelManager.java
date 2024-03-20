@@ -1,6 +1,7 @@
 package model;
 
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 public class ChatModelManager implements ChatModel{
 
@@ -22,6 +23,11 @@ public class ChatModelManager implements ChatModel{
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
+    @Override public ArrayList<Message> getAllMessages()
+    {
+        return messageLog.getLogs();
+    }
+
     @Override
     public void addMessageLog(Message message, String ip) {
        messageLog.addLog(message, ip);
@@ -31,6 +37,11 @@ public class ChatModelManager implements ChatModel{
     @Override public int getNumberOfConnectedUsers()
     {
         return 0;
+    }
+
+    @Override public String getIp()
+    {
+        return null;
     }
 
 }

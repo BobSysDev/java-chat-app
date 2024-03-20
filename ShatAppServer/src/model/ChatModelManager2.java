@@ -5,6 +5,7 @@ import mediator.ChatServer;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ChatModelManager2 implements ChatModel
 {
@@ -16,6 +17,12 @@ public class ChatModelManager2 implements ChatModel
     this.propertyChangeSupport = new PropertyChangeSupport(this);
     this.chatServer = ChatServer.getInstance();
   }
+
+  @Override public ArrayList<Message> getAllMessages()
+  {
+    return null;
+  }
+
   @Override public void addMessageLog(Message message, String ip)
   {
 
@@ -24,6 +31,11 @@ public class ChatModelManager2 implements ChatModel
   @Override public int getNumberOfConnectedUsers()
   {
     return chatServer.getHandlersSize();
+  }
+
+  @Override public String getIp()
+  {
+    chatServer.
   }
 
   public void addListener(java.beans.PropertyChangeListener listener) {
