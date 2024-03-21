@@ -35,7 +35,7 @@ public class ChatModelManager2 implements ChatModel
 
   @Override public String getIp()
   {
-    chatServer.
+    return null;
   }
 
   public void addListener(java.beans.PropertyChangeListener listener) {

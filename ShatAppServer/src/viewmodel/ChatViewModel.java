@@ -15,17 +15,17 @@ import model.Message;
 public class ChatViewModel implements PropertyChangeListener{
 
   private ChatModel model;
-  private ChatModel model2;
+  //private ChatModel model2;
   private static ObservableList<String> messages;
   private StringProperty onlineCountLabel;
 
 
-  public ChatViewModel(ChatModel model, ChatModel model2){
+  public ChatViewModel(ChatModel model){
     this.model = model;
-    this.model2 = model2;
+    //this.model2 = model2;
     this.messages = FXCollections.observableArrayList();
     this.model.getNumberOfConnectedUsers();
-    this.onlineCountLabel = new SimpleStringProperty(String.valueOf(model2.getNumberOfConnectedUsers()));
+    //this.onlineCountLabel = new SimpleStringProperty(String.valueOf(model2.getNumberOfConnectedUsers()));
     model.addListener(this);
     loadFromModel();
   }
@@ -35,7 +35,7 @@ public class ChatViewModel implements PropertyChangeListener{
   }
   public void refresh()
   {
-    this.onlineCountLabel.set(String.valueOf(model2.getNumberOfConnectedUsers()));
+   //this.onlineCountLabel.set(String.valueOf(model2.getNumberOfConnectedUsers()));
   }
 
   public void loadFromModel(){
@@ -52,11 +52,11 @@ public class ChatViewModel implements PropertyChangeListener{
     return messages;
   }
 
-  public void send(String content){
-    String ip = model2.
-    Message m = new Message(content,)
-    model.addMessageLog(m,);
-  }
+//  public void send(String content){
+//    String ip = model2.
+//    Message m = new Message(content,)
+//    model.addMessageLog(m,);
+//  }
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     if(evt.getPropertyName().equals("ADD")){

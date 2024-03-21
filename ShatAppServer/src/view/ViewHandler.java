@@ -11,7 +11,7 @@ public class ViewHandler
     private Stage primaryStage;
     private Scene currentScene;
 
-    ChatViewController chatViewController;
+    private ChatViewController chatViewController;
    // SettingsViewController settingsViewController;
 
     public ViewHandler(ViewModelFactory factory){
@@ -28,46 +28,41 @@ public class ViewHandler
         Region root = null;
         switch (id){
             case "chat" -> root = loadChatView("ChatView.fxml");
-            case "settings" -> root = loadSettingsView("SettingsView.fxml");
+            //case "settings" -> root = loadSettingsView("SettingsView.fxml");
         }
         currentScene.setRoot(root);
+        String title = "";
+        if (root.getUserData()!=null){
+            title += root.getUserData();
+        }
+        primaryStage.setTitle(title);
         primaryStage.setScene(currentScene);
-        primaryStage.setHeight(root.getPrefHeight());
         primaryStage.setWidth(root.getPrefWidth());
+        primaryStage.setHeight(root.getPrefHeight());
         primaryStage.show();
 
     }
 
-    public Region loadChatView(String fxmlFile){
+    private Region loadChatView(String fxmlFile){
         Region root = null;
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource(fxmlFile));
-            root = loader.load();
-            chatViewController = loader.getController();
-            // chatViewController.init(this, factory.getChatViewModel(), root);
+        if (chatViewController==null){
+            try
+            {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(fxmlFile));
+                root = loader.load();
+                chatViewController = loader.getController();
+                chatViewController.init(this, factory.getChatViewModel(), root);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
-        catch (Exception e) {
-            e.printStackTrace();
+        else {
+            chatViewController.reset();
         }
-
-        return root;
-    }
-
-    public Region loadSettingsView(String fxmlFile){
-        Region root = null;
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource(fxmlFile));
-            root = loader.load();
-            //settingsViewController = loader.getController();
-            // settingsViewController.init(this, factory.getSettingsViewModel(), root);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return root;
+        return chatViewController.getRoot();
     }
 
 
