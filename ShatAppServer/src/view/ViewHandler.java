@@ -30,10 +30,14 @@ public class ViewHandler
             case "chat" -> root = loadChatView("ChatView.fxml");
             case "settings" -> root = loadSettingsView("SettingsView.fxml");
         }
+        if (primaryStage.isShowing()) {
+            primaryStage.close();
+        }
         currentScene.setRoot(root);
         primaryStage.setScene(currentScene);
         primaryStage.setHeight(root.getPrefHeight());
         primaryStage.setWidth(root.getPrefWidth());
+        primaryStage.setResizable(false);
         primaryStage.show();
 
     }
