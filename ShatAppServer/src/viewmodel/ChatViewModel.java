@@ -2,6 +2,7 @@ package viewmodel;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,6 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.ChatModel;
 import model.Message;
+import model.TimestampManipulation;
 
 public class ChatViewModel implements PropertyChangeListener{
 
@@ -22,12 +24,11 @@ public class ChatViewModel implements PropertyChangeListener{
 
   public ChatViewModel(ChatModel model){
     this.model = model;
-    //this.model2 = model2;
-    this.messages = FXCollections.observableArrayList();
+    messages = FXCollections.observableArrayList();
     this.model.getConnectedUsers();
     this.onlineCountLabel = new SimpleStringProperty(String.valueOf(model.getConnectedUsers()));
     model.addListener(this);
-    loadFromModel();
+    //loadFromModel();
   }
 
   public StringProperty getOnlineCountLabel(){
@@ -39,28 +40,36 @@ public class ChatViewModel implements PropertyChangeListener{
   }
 
   public void loadFromModel(){
-    messages.clear();
+    if(!messages.isEmpty()){
+      messages.clear();
+    }
     for (int i = 0; i < model.getAllMessages().size(); i++) {
-      messages.add("{"+model.getAllMessages().get(i).getTimestamp() +
+      messages.add("{"+ TimestampManipulation.convertTimestampToDateTimeShort(model.getAllMessages().get(i).getTimestamp()) +
           "} "+model.getAllMessages().get(i).getSender()+"> "+
           model.getAllMessages().get(i).getContent());
-      //System.out.println(model.getAllVinyls().get(i).toString());
     }
   }
 
-  public ObservableList<String> getMessages(){
+  public void addMessage(Message m){
+    messages.add("{"+ TimestampManipulation.convertTimestampToDateTimeShort(m.getTimestamp()) +
+        "} "+m.getSender()+": "+
+        m.getContent());
+  }
+
+  public static ObservableList<String> getMessages() {
     return messages;
   }
 
-//  public void send(String content){
-//    String ip = model2.
-//    Message m = new Message(content,)
-//    model.addMessageLog(m,);
-//  }
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     if(evt.getPropertyName().equals("ADD")){
-      loadFromModel();
+      Message m = (Message) evt.getNewValue();
+      String messageString = "{"+TimestampManipulation.convertTimestampToDateTimeShort(m.getTimestamp())+"} "
+          +m.getSender()+": "+m.getContent();
+      Platform.runLater(()->messages.add(0,messageString));
+      //loadFromModel();
+      System.out.println("ChatViewModel->loaded from model (event)");
+      //addMessage(m);
     }
   }
 }

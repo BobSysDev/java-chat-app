@@ -42,7 +42,11 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
       try{
         String incoming = in.readLine();
         if(incoming.equals("/online")){
-          out.println(server.getHandlersSize());
+          //out.println(server.getHandlersSize());
+        }
+        else if (incoming.equals("")||incoming == null)
+        {
+          out.println("You cannot send empty message!");
         }
         else{
           Message message = gson.fromJson(incoming, Message.class);

@@ -22,6 +22,9 @@ public class MyApplication extends Application
     view.start(primaryStage);
 
     ChatServer chatServer = new ChatServer(model,5678);
+    Thread thread = new Thread(chatServer);
+    thread.setDaemon(true);
+    thread.start();
 
   }
 }

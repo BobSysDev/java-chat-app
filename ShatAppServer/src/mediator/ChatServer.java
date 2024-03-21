@@ -16,7 +16,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class ChatServer {
+public class ChatServer implements Runnable{
     private ServerSocket chatSocket;
     private ChatModel chatModel;
     private ArrayList<ChatClientHandler> handlers;
@@ -34,10 +34,7 @@ public class ChatServer {
         System.out.println(
             "Starting Server " + InetAddress.getLocalHost().getHostAddress()
                 + " at port " + port + "...");
-
-        execute();
-
-    }
+        }
 
     private void execute(){
         while(true){
@@ -49,6 +46,7 @@ public class ChatServer {
                 handlers.add(handler);
 
                 Thread clientThread = new Thread(handler);
+                clientThread.setDaemon(true);
                 clientThread.start();
             }
             catch (Exception e){
@@ -57,24 +55,14 @@ public class ChatServer {
         }
     }
 
-    public int getHandlersSize(){
-        chatModel.setConnectedUsers(getHandlersSize());
-        return handlers.size();
+    public void HandlersSize(){
+        chatModel.setConnectedUsers(handlers.size());
     }
 
-//    @Override public void propertyChange(PropertyChangeEvent evt)
-//    {
-//        if(evt.getPropertyName().equals("ONLINE_REQUEST")){
-//            propertyChangeSupport.firePropertyChange("ONLINE_REPLY",getHandlersSize(),null);
-//        }
-//    }
+    @Override public void run()
+    {
+        execute();
+    }
 
-//    public void addListener(java.beans.PropertyChangeListener listener) {
-//        propertyChangeSupport.addPropertyChangeListener(listener);
-//    }
-//
-//    public void removeListener(java.beans.PropertyChangeListener listener) {
-//        propertyChangeSupport.removePropertyChangeListener(listener);
-//    }
 }
 
