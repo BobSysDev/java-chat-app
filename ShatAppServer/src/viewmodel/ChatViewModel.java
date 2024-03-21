@@ -24,8 +24,8 @@ public class ChatViewModel implements PropertyChangeListener{
     this.model = model;
     //this.model2 = model2;
     this.messages = FXCollections.observableArrayList();
-    this.model.getNumberOfConnectedUsers();
-    //this.onlineCountLabel = new SimpleStringProperty(String.valueOf(model2.getNumberOfConnectedUsers()));
+    this.model.getConnectedUsers();
+    this.onlineCountLabel = new SimpleStringProperty(String.valueOf(model.getConnectedUsers()));
     model.addListener(this);
     loadFromModel();
   }
@@ -35,7 +35,7 @@ public class ChatViewModel implements PropertyChangeListener{
   }
   public void refresh()
   {
-   //this.onlineCountLabel.set(String.valueOf(model2.getNumberOfConnectedUsers()));
+   this.onlineCountLabel.set(String.valueOf(model.getConnectedUsers()));
   }
 
   public void loadFromModel(){

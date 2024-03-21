@@ -19,14 +19,13 @@ import java.util.ArrayList;
 public class ChatServer {
     private ServerSocket chatSocket;
     private ChatModel chatModel;
-    private static ChatServer instance;
     private ArrayList<ChatClientHandler> handlers;
-    private static Object lock = new Object();
 
 
 
 
-    private ChatServer(ChatModel chatModel, int port)  throws IOException
+
+    public ChatServer(ChatModel chatModel, int port)  throws IOException
     {
         this.chatModel = chatModel;
         this.chatSocket = new ServerSocket(port);
@@ -38,18 +37,6 @@ public class ChatServer {
 
         execute();
 
-    }
-
-    public static ChatServer getInstance() throws IOException
-    {
-        if(instance==null){
-            synchronized (lock){
-                if (instance==null){
-                    instance = new ChatServer(new ChatModelManager(),5678);
-                }
-            }
-        }
-        return instance;
     }
 
     private void execute(){
@@ -71,7 +58,7 @@ public class ChatServer {
     }
 
     public int getHandlersSize(){
-//        propertyChangeSupport.firePropertyChange("ONLINE",handlers.size(),null);
+        chatModel.setConnectedUsers(getHandlersSize());
         return handlers.size();
     }
 

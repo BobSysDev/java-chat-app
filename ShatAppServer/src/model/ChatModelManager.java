@@ -7,6 +7,7 @@ public class ChatModelManager implements ChatModel{
 
     private PropertyChangeSupport propertyChangeSupport;
     private MessageLog messageLog;
+    private int connectedUsers;
 
 
     public ChatModelManager() {
@@ -34,10 +35,16 @@ public class ChatModelManager implements ChatModel{
        propertyChangeSupport.firePropertyChange("ADD", ip, message);
     }
 
-    @Override public int getNumberOfConnectedUsers()
+    @Override public int getConnectedUsers()
     {
-        return 0;
+        return connectedUsers;
     }
+
+    @Override public void  setConnectedUsers(int n)
+    {
+        this.connectedUsers = n;
+    }
+
 
     @Override public String getIp()
     {

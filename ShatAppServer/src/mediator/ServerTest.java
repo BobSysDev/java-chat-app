@@ -10,7 +10,7 @@ public class ServerTest
   public static void main(String[] args) throws IOException
   {
     ChatModel chatModel = new ChatModelManager();
-    ChatServer chatServer = ChatServer.getInstance();
+    ChatServer chatServer = new ChatServer(chatModel,5678);
 
   }
 }

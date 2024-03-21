@@ -27,7 +27,7 @@ public class ChatViewController {
         this.sendButton.setVisible(false);
         this.settingsButton.setVisible(false);
         this.chatList.setItems(viewModel.getMessages());
-        //this.onlineCountLabel.textProperty().bind(viewModel.getOnlineCountLabel());
+        this.onlineCountLabel.textProperty().bind(viewModel.getOnlineCountLabel());
     }
     public void reset()
     {

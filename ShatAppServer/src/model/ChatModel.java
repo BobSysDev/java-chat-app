@@ -8,7 +8,8 @@ public interface ChatModel extends UnnamedPropertyChangeSubject
 {
         ArrayList<Message> getAllMessages();
         void addMessageLog(Message message, String ip);
-        int getNumberOfConnectedUsers();
+        int getConnectedUsers();
+        void setConnectedUsers(int n);
 
         String getIp();
 
