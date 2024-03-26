@@ -1,6 +1,7 @@
 package view;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
@@ -35,6 +36,14 @@ public class SettingsViewController
 
     @FXML
     public void applyButtonPressed() {
+        String username = viewModel.getUsername();
+        String ip = viewModel.getIp();
+        IntegerProperty port = viewModel.getPort();
+
+        viewModel.setUsername(username);
+        viewModel.setIp(ip);
+        viewModel.setPort(port);
+
         view.openView("chat");
     }
 
