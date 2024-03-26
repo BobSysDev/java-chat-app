@@ -44,6 +44,7 @@ public class ChatServer implements Runnable{
                 socket = chatSocket.accept();
                 ChatClientHandler handler = new ChatClientHandler(socket,chatModel,this);
                 handlers.add(handler);
+                handlersSize();
 
                 Thread clientThread = new Thread(handler);
                 clientThread.setDaemon(true);
@@ -55,7 +56,7 @@ public class ChatServer implements Runnable{
         }
     }
 
-    public void HandlersSize(){
+    public void handlersSize(){
         chatModel.setConnectedUsers(handlers.size());
     }
 
