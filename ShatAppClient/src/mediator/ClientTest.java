@@ -12,7 +12,7 @@ public class ClientTest
     Scanner input = new Scanner(System.in);
     boolean running = true;
     MessageClient messageClient = new MessageClient("Electimore");
-    messageClient.connect("10.154.196.36",5678);
+    messageClient.connect("6.tcp.eu.ngrok.io",12671);
 
     while(running){
       System.out.print("Your message: ");
