@@ -52,6 +52,10 @@ public class MessageClient
       messageReader.start();
       running = true;
       sendWelcomeMessage();
+
+      Thread heartbeatThread = new Thread(new Heartbeat(this), "heartbeat");
+      heartbeatThread.setDaemon(true);
+      heartbeatThread.start();
     }
     catch(ConnectException e){
       System.out.println("Error: Could not establish connection with the server. Check input and try again...");
@@ -86,5 +90,13 @@ public class MessageClient
     Message connected = new Message("<has connected!>", username);
     String jsonConnect = gson.toJson(connected);
     out.println(jsonConnect);
+  }
+
+  public boolean isRunning(){
+    return running;
+  }
+
+  public void sendHeartbeat(){
+    out.println("heartbeat");
   }
 }

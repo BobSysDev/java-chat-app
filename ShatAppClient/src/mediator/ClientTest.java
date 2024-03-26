@@ -14,10 +14,10 @@ public class ClientTest
     MessageClient messageClient = new MessageClient("kvecko");
     messageClient.connect("loaclhost",5678);
 
-//    while(running){
-//      System.out.print("Your message: ");
-//      String chat = input.nextLine();
-//      messageClient.sendMessage(chat);
-//    }
+    while(running){
+      System.out.print("Your message: ");
+      String chat = input.nextLine();
+      messageClient.sendMessage(chat);
+    }
   }
 }

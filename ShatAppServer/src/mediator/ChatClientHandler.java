@@ -14,6 +14,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   private ChatModel chatModel;
   private ChatServer server;
   private Socket socket;
+  private HeartbeatListener heartbeatListener;
 
 
   public ChatClientHandler(Socket socket, ChatModel chatModel, ChatServer server){
@@ -23,6 +24,10 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
       this.ip = socket.getInetAddress().getHostAddress();
       this.server = server;
       this.socket = socket;
+      heartbeatListener = new HeartbeatListener(this);
+      Thread heartbeatListenerThread = new Thread(heartbeatListener, "HBListener");
+      heartbeatListenerThread.setDaemon(true);
+      heartbeatListenerThread.start();
     }
     catch(IOException e){
       e.printStackTrace();
@@ -38,15 +43,21 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   }
   @Override public void run()
   {
-    boolean running = true;
     Gson gson = new Gson();
-    while(running){
+    while(true){
+      if (socket.isClosed()){
+        break;
+      }
+
       try{
         String incoming = in.readLine();
         if(incoming.equals("/online")){
           //out.println(server.getHandlersSize());
         }
-        else if (incoming.equals("")||incoming == null)
+        else if (incoming.equals("heartbeat")){
+          heartbeatListener.registerBeat();
+        }
+        else if (incoming.equals("") || incoming == null)
         {
           out.println("You cannot send empty message!");
         }
@@ -56,11 +67,6 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
           chatModel.addMessageLog(message, ip);
           System.out.println(ip+"> "+message.toString());
           //System.out.println("Received a message from [" + message.getSender() + "]. Broadcasting...");
-        }
-        if (socket.isClosed()){
-          server.userDisconnected(this);
-          running = false;
-          break;
         }
       }
       catch (IOException e){
@@ -75,6 +81,18 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
       Message m = (Message)evt.getNewValue();
       out.println(m.toString());
 
+    }
+  }
+
+  public void closeSocket(){
+    try
+    {
+      socket.close();
+      server.userDisconnected(this);
+    }
+    catch (IOException e)
+    {
+      throw new RuntimeException(e);
     }
   }
 }
