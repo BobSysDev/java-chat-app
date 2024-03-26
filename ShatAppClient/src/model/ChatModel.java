@@ -13,7 +13,6 @@ public interface ChatModel extends UnnamedPropertyChangeSubject
 
 
         ArrayList<Message> getMessages();
-
         Message getCurrentMessage();
         void setCurrentMessage(Message message);
 

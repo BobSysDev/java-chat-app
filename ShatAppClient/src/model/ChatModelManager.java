@@ -69,7 +69,7 @@ public class ChatModelManager implements ChatModel, UnnamedPropertyChangeSubject
     public String getServerIP(){
         return this.serverIP;
     }
-
+    
     @Override
     public void setServerIP(String serverIP){
         this.serverIP = serverIP;
