@@ -3,6 +3,7 @@ package model;
 import utility.UnnamedPropertyChangeSubject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ChatModel extends UnnamedPropertyChangeSubject
 {
@@ -29,9 +30,5 @@ public interface ChatModel extends UnnamedPropertyChangeSubject
 
         int getConnectedUsers();
         void setConnectedUsers(int n);
-
-
-
-
 
 }
