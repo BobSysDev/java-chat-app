@@ -48,14 +48,18 @@ public class ChatViewModel implements PropertyChangeListener{
     }
   }
 
-  public void addMessage(Message m){
-    messages.add("{"+ TimestampManipulation.convertTimestampToDateTimeShort(m.getTimestamp()) +
-        "} "+m.getSender()+": "+
-        m.getContent());
-  }
+//  public void addMessage(Message m){
+//    messages.add("{"+ TimestampManipulation.convertTimestampToDateTimeShort(m.getTimestamp()) +
+//        "} "+m.getSender()+": "+
+//        m.getContent());
+//  }
 
   public static ObservableList<String> getMessages() {
     return messages;
+  }
+
+  public void send(String content){
+    model.setMessage(content);
   }
 
   @Override public void propertyChange(PropertyChangeEvent evt)
