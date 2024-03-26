@@ -51,7 +51,7 @@ public class MessageClient
       messageReader.setDaemon(true);
       messageReader.start();
       running = true;
-      handleMessages();
+      sendWelcomeMessage();
     }
     catch(ConnectException e){
       System.out.println("Error: Could not establish connection with the server. Check input and try again...");
@@ -75,23 +75,16 @@ public class MessageClient
     }
   }
 
-  private void handleMessages(){
+  public void sendMessage(String text){
+    Message message = new Message(text, username);
+    String payload = gson.toJson(message);
+    out.println(payload);
+  }
+
+  private void sendWelcomeMessage(){
     System.out.println("Now you can chat with others!");
     Message connected = new Message("<has connected!>", username);
     String jsonConnect = gson.toJson(connected);
     out.println(jsonConnect);
-
-    while(running){
-      System.out.print("Your message: ");
-      String chat = input.nextLine();
-      if(chat.equals("/online")){
-        out.println(chat);
-      }
-      else {
-        Message m = new Message(chat, username);
-        String json = gson.toJson(m);
-        out.println(json);
-      }
-    }
   }
 }
