@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 import com.google.gson.Gson;
 import model.Message;
@@ -20,50 +22,69 @@ public class MessageClient
   private boolean running;
   private String receivedString;
 
-  public MessageClient(String host, int port) throws IOException {
+  private String username;
+
+  public MessageClient(String username) throws IOException {
+    socket = null;
+    in = null;
+    out = null;
+    this.gson = new Gson();
+    this.input = new Scanner(System.in);
+    this.running = true;
+
+    this.username = username;
+  }
+
+  public void setUsername(String username)
+  {
+    this.username = username;
+  }
+
+  public void connect(String serverIp, int port){
     try{
-      this.socket = new Socket(host, port);
-      System.out.println(socket.hashCode());
-      System.out.println("DEBUG: Connected to server: " + host + " at port " + port);
-      this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-      this.out = new PrintWriter(socket.getOutputStream(), true);
-      this.gson = new Gson();
-      this.input = new Scanner(System.in);
-      this.running = true;
-      Thread t = new Thread(new MessageClientReader(this, in));
-      t.setDaemon(true);
-      t.start();
-      execute();
+      System.out.println("Attempting to connect...");
+      socket = new Socket(serverIp, port);
+      in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+      out = new PrintWriter(socket.getOutputStream(), true);
+      System.out.println("Connected to " + serverIp + ":" + port);
+      Thread messageReader = new Thread(new MessageClientReader(this, in), "messageReader");
+      messageReader.setDaemon(true);
+      messageReader.start();
+      running = true;
+      sendWelcomeMessage();
     }
-    catch (IOException e){
+    catch(ConnectException e){
+      System.out.println("Error: Could not establish connection with the server. Check input and try again...");
+    }
+
+    catch(IOException e){
       e.printStackTrace();
     }
   }
 
-//  public synchronized void receive(String s)
-//  {
-//      receivedString = s;
-//      notify();
-//  }
+  public void dropConnection(){
+    try
+    {
+      socket.close();
+      System.out.println("The server is not responding. Try reconnecting...");
+      running = false;
+    }
+    catch (IOException e)
+    {
+      throw new RuntimeException(e);
+    }
+  }
 
-  private void execute(){
+  public void sendMessage(String text){
+    Message message = new Message(text, username);
+    String payload = gson.toJson(message);
+    out.println(payload);
+  }
+
+  private void sendWelcomeMessage(){
     System.out.println("Now you can chat with others!");
-    System.out.print("Your name: ");
-    String username = input.nextLine();
-    Message connected = new Message("<has connected!>",username);
+    Message connected = new Message("<has connected!>", username);
     String jsonConnect = gson.toJson(connected);
     out.println(jsonConnect);
-    while(running){
-      System.out.print("Your message: ");
-      String chat = input.nextLine();
-      if(chat.equals("/online")){
-        out.println(chat);
-      }
-      else {
-        Message m = new Message(chat,username);
-        String json = gson.toJson(m);
-        out.println(json);
-      }
-    }
   }
 }

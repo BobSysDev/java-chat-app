@@ -5,10 +5,8 @@ import java.beans.PropertyChangeSupport;
 public class ChatModelManager implements ChatModel{
 
     private PropertyChangeSupport propertyChangeSupport;
-    private MessageLog messageLog;
 
     public ChatModelManager() {
-        this.messageLog = MessageLog.getInstance();
         this.propertyChangeSupport = new PropertyChangeSupport(this);
     }
 
@@ -18,10 +16,5 @@ public class ChatModelManager implements ChatModel{
 
     public void removeListener(java.beans.PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
-    }
-
-    @Override
-    public void addMessageLog(Message message, String ip) {
-       messageLog.addLog(message, ip);
     }
 }
