@@ -1,12 +1,16 @@
 package model;
 
 import utility.UnnamedPropertyChangeSubject;
-public interface ChatModel extends UnnamedPropertyChangeSubject{
 
-//    String getMessage();
-//    String getSender();
-//    String getTimestamp();
+import java.util.ArrayList;
 
-    void addMessageLog(Message message, String ip);
+public interface ChatModel extends UnnamedPropertyChangeSubject
+{
+        ArrayList<Message> getAllMessages();
+        void addMessageLog(Message message, String ip);
+        int getConnectedUsers();
+        void setConnectedUsers(int n);
+
+        String getIp();
 
 }

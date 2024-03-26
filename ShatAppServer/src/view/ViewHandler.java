@@ -49,7 +49,7 @@ public class ViewHandler
             loader.setLocation(getClass().getResource(fxmlFile));
             root = loader.load();
             chatViewController = loader.getController();
-            // chatViewController.init(this, factory.getChatViewModel(), root);
+            chatViewController.init(this, factory.getChatViewModel(), root);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -65,7 +65,7 @@ public class ViewHandler
             loader.setLocation(getClass().getResource(fxmlFile));
             root = loader.load();
             settingsViewController = loader.getController();
-            // settingsViewController.init(this, factory.getSettingsViewModel(), root);
+            settingsViewController.init(this, factory.getSettingsViewModel(), root);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +73,4 @@ public class ViewHandler
 
         return root;
     }
-
-
-
 }
