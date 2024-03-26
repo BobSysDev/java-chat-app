@@ -60,6 +60,10 @@ public class ChatServer implements Runnable{
         chatModel.setConnectedUsers(handlers.size());
     }
 
+    public void userDisconnected(ChatClientHandler user){
+        handlers.remove(user);
+    }
+
     @Override public void run()
     {
         execute();

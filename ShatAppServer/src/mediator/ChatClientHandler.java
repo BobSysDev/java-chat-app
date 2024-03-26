@@ -13,6 +13,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   private String ip;
   private ChatModel chatModel;
   private ChatServer server;
+  private Socket socket;
 
 
   public ChatClientHandler(Socket socket, ChatModel chatModel, ChatServer server){
@@ -21,6 +22,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
       this.out = new PrintWriter(socket.getOutputStream(), true);
       this.ip = socket.getInetAddress().getHostAddress();
       this.server = server;
+      this.socket = socket;
     }
     catch(IOException e){
       e.printStackTrace();
@@ -54,6 +56,11 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
           chatModel.addMessageLog(message, ip);
           System.out.println(ip+"> "+message.toString());
           //System.out.println("Received a message from [" + message.getSender() + "]. Broadcasting...");
+        }
+        if (socket.isClosed()){
+          server.userDisconnected(this);
+          running = false;
+          break;
         }
       }
       catch (IOException e){
