@@ -28,7 +28,7 @@ public class ViewHandler
         Region root = null;
         switch (id){
             case "chat" -> root = loadChatView("ChatView.fxml");
-            //case "settings" -> root = loadSettingsView("SettingsView.fxml");
+            case "settings" -> root = loadSettingsView("SettingsView.fxml");
         }
         if (primaryStage.isShowing()) {
             primaryStage.close();
@@ -58,19 +58,19 @@ public class ViewHandler
         return root;
     }
 
-//    public Region loadSettingsView(String fxmlFile){
-//        Region root = null;
-//        try {
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource(fxmlFile));
-//            root = loader.load();
-//            settingsViewController = loader.getController();
-//            settingsViewController.init(this, factory.getSettingsViewModel(), root);
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return root;
-//    }
+    public Region loadSettingsView(String fxmlFile){
+        Region root = null;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(fxmlFile));
+            root = loader.load();
+            settingsViewController = loader.getController();
+            settingsViewController.init(this, factory.getSettingsViewModel(), root);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return root;
+    }
 }

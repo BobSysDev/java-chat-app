@@ -4,6 +4,8 @@ import model.ChatModel;
 public class ViewModelFactory
 {
   private ChatViewModel chatViewModel;
+  private SettingsViewModel settingsViewModel;
+
 
 
 
@@ -14,6 +16,9 @@ public class ViewModelFactory
 
   public ChatViewModel getChatViewModel(){
     return chatViewModel;
+  }
+  public SettingsViewModel getSettingsViewModel(){
+    return settingsViewModel;
   }
 
 

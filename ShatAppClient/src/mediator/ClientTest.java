@@ -11,13 +11,13 @@ public class ClientTest
   {
     Scanner input = new Scanner(System.in);
     boolean running = true;
-    MessageClient messageClient = new MessageClient("Electimore");
-    messageClient.connect("10.154.196.36",5678);
+    MessageClient messageClient = new MessageClient("kvecko");
+    messageClient.connect("loaclhost",5678);
 
-    while(running){
-      System.out.print("Your message: ");
-      String chat = input.nextLine();
-      messageClient.sendMessage(chat);
-    }
+//    while(running){
+//      System.out.print("Your message: ");
+//      String chat = input.nextLine();
+//      messageClient.sendMessage(chat);
+//    }
   }
 }
