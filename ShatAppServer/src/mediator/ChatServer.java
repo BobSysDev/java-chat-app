@@ -2,31 +2,39 @@
 package mediator;
 
 import model.ChatModel;
+import model.ChatModelManager;
+import model.Message;
+import model.MessageLog;
+import utility.UnnamedPropertyChangeSubject;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class ChatServer
-{
+public class ChatServer implements Runnable{
     private ServerSocket chatSocket;
     private ChatModel chatModel;
     private ArrayList<ChatClientHandler> handlers;
 
-    public ChatServer(ChatModel chatModel, int port) throws IOException
+
+
+
+
+    public ChatServer(ChatModel chatModel, int port)  throws IOException
     {
         this.chatModel = chatModel;
         this.chatSocket = new ServerSocket(port);
         this.handlers = new ArrayList<>();
+
         System.out.println(
             "Starting Server " + InetAddress.getLocalHost().getHostAddress()
                 + " at port " + port + "...");
-
-        execute();
-
-    }
+        }
 
     private void execute(){
         while(true){
@@ -36,7 +44,9 @@ public class ChatServer
                 socket = chatSocket.accept();
                 ChatClientHandler handler = new ChatClientHandler(socket,chatModel,this);
                 handlers.add(handler);
+
                 Thread clientThread = new Thread(handler);
+                clientThread.setDaemon(true);
                 clientThread.start();
             }
             catch (Exception e){
@@ -45,8 +55,13 @@ public class ChatServer
         }
     }
 
-    public int getHandlersSize(){
-        return handlers.size();
+    public void HandlersSize(){
+        chatModel.setConnectedUsers(handlers.size());
+    }
+
+    @Override public void run()
+    {
+        execute();
     }
 
 }

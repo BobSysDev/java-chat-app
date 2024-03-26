@@ -31,6 +31,9 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
 
   }
 
+  public String getIp(){
+    return ip;
+  }
   @Override public void run()
   {
     boolean running = true;
@@ -39,7 +42,11 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
       try{
         String incoming = in.readLine();
         if(incoming.equals("/online")){
-          out.println(server.getHandlersSize());
+          //out.println(server.getHandlersSize());
+        }
+        else if (incoming.equals("")||incoming == null)
+        {
+          out.println("You cannot send empty message!");
         }
         else{
           Message message = gson.fromJson(incoming, Message.class);
@@ -57,7 +64,10 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
 
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-    Message m = (Message)evt.getNewValue();
-    out.println(m.toString());
+    if(evt.getPropertyName().equals("ADD")){
+      Message m = (Message)evt.getNewValue();
+      out.println(m.toString());
+
+    }
   }
 }

@@ -26,6 +26,9 @@ public class MessageLog
     return instance;
   }
 
+  public ArrayList<Message> getLogs(){
+    return logs;
+  }
 
   public void addLog(String content, String sender, long timestamp, String ip){
     Message message = new Message(content, sender, timestamp);
