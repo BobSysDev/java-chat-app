@@ -11,8 +11,8 @@ public class ViewHandler
     private Stage primaryStage;
     private Scene currentScene;
 
-    private ChatViewController chatViewController;
-   // SettingsViewController settingsViewController;
+    ChatViewController chatViewController;
+    SettingsViewController settingsViewController;
 
     public ViewHandler(ViewModelFactory factory){
         this.factory = factory;
@@ -28,43 +28,49 @@ public class ViewHandler
         Region root = null;
         switch (id){
             case "chat" -> root = loadChatView("ChatView.fxml");
-            //case "settings" -> root = loadSettingsView("SettingsView.fxml");
+            case "settings" -> root = loadSettingsView("SettingsView.fxml");
+        }
+        if (primaryStage.isShowing()) {
+            primaryStage.close();
         }
         currentScene.setRoot(root);
-        String title = "";
-        if (root.getUserData()!=null){
-            title += root.getUserData();
-        }
-        primaryStage.setTitle(title);
         primaryStage.setScene(currentScene);
-        primaryStage.setWidth(root.getPrefWidth());
         primaryStage.setHeight(root.getPrefHeight());
+        primaryStage.setWidth(root.getPrefWidth());
+        primaryStage.setResizable(false);
         primaryStage.show();
 
     }
 
-    private Region loadChatView(String fxmlFile){
+    public Region loadChatView(String fxmlFile){
         Region root = null;
-        if (chatViewController==null){
-            try
-            {
-                FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource(fxmlFile));
-                root = loader.load();
-                chatViewController = loader.getController();
-                chatViewController.init(this, factory.getChatViewModel(), root);
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(fxmlFile));
+            root = loader.load();
+            chatViewController = loader.getController();
+            chatViewController.init(this, factory.getChatViewModel(), root);
         }
-        else {
-            chatViewController.reset();
+        catch (Exception e) {
+            e.printStackTrace();
         }
-        return chatViewController.getRoot();
+
+        return root;
     }
 
+    public Region loadSettingsView(String fxmlFile){
+        Region root = null;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(fxmlFile));
+            root = loader.load();
+            settingsViewController = loader.getController();
+            settingsViewController.init(this, factory.getSettingsViewModel(), root);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
-
+        return root;
+    }
 }
