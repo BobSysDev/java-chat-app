@@ -37,16 +37,16 @@ public class ChatViewModel implements PropertyChangeListener{
    this.onlineCountLabel.set(String.valueOf(model.getConnectedUsers()));
   }
 
-  public void loadFromModel(){
-    if(!messages.isEmpty()){
-      messages.clear();
-    }
-    for (int i = 0; i < model.getAllMessages().size(); i++) {
-      messages.add("{"+ TimestampManipulation.convertTimestampToDateTimeShort(model.getAllMessages().get(i).getTimestamp()) +
-          "} "+model.getAllMessages().get(i).getSender()+"> "+
-          model.getAllMessages().get(i).getContent());
-    }
-  }
+//  public void loadFromModel(){
+//    if(!messages.isEmpty()){
+//      messages.clear();
+//    }
+//    for (int i = 0; i < model.getAllMessages().size(); i++) {
+//      messages.add("{"+ TimestampManipulation.convertTimestampToDateTimeShort(model.getAllMessages().get(i).getTimestamp()) +
+//          "} "+model.getAllMessages().get(i).getSender()+"> "+
+//          model.getAllMessages().get(i).getContent());
+//    }
+//  }
 
   public void addMessage(Message m){
     messages.add("{"+ TimestampManipulation.convertTimestampToDateTimeShort(m.getTimestamp()) +

@@ -10,7 +10,4 @@ public interface ChatModel extends UnnamedPropertyChangeSubject
         void addMessageLog(Message message, String ip);
         int getConnectedUsers();
         void setConnectedUsers(int n);
-
-        String getIp();
-
 }

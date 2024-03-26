@@ -11,8 +11,8 @@ public class ClientTest
   {
     Scanner input = new Scanner(System.in);
     boolean running = true;
-    MessageClient messageClient = new MessageClient("kvecko");
-    messageClient.connect("loaclhost",5678);
+    MessageClient messageClient = new MessageClient("Marius");
+    messageClient.connect("192.168.85.252",5678);
 
 //    while(running){
 //      System.out.print("Your message: ");
