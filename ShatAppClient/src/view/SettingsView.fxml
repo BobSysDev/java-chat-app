@@ -24,7 +24,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Label text="Username:">
+                  <Label prefHeight="23.0" prefWidth="140.0" text="Username:">
                      <font>
                         <Font name="Comic Sans MS" size="16.0" />
                      </font>
@@ -41,7 +41,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Label text="IP and port:">
+                  <Label prefHeight="23.0" prefWidth="122.0" text="IP and port:">
                      <font>
                         <Font name="Comic Sans MS" size="16.0" />
                      </font>
@@ -79,6 +79,9 @@
                      </font>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>
