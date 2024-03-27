@@ -13,6 +13,8 @@ public interface ChatModel extends UnnamedPropertyChangeSubject
 
         void connect();
         void disconnect();
+        void setRunning(boolean running);
+        boolean isRunning();
         ArrayList<Message> getMessages();
         Message getCurrentMessage();
         void setCurrentMessage(String content);
