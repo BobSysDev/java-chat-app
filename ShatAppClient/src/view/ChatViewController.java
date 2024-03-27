@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import viewmodel.ChatViewModel;
 
@@ -24,11 +26,18 @@ public class ChatViewController
         this.view = view;
         this.root = root;
         this.viewModel = viewModel;
-        this.messageTextField.setVisible(false);
-        this.sendButton.setVisible(false);
-        this.settingsButton.setVisible(false);
+        //this.messageTextField.setVisible(false);
+        //this.sendButton.setVisible(false);
+        //this.settingsButton.setVisible(false);
         this.chatList.setItems(viewModel.getMessages());
         this.onlineCountLabel.textProperty().bind(viewModel.getOnlineCountLabel());
+
+        root.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
+            if (ev.getCode() == KeyCode.ENTER) {
+                sendButtonPressed();
+                ev.consume();
+            }
+        });
     }
     public void reset()
     {
@@ -41,14 +50,17 @@ public class ChatViewController
         viewModel.refresh();
     }
     @FXML public void settingsButtonPressed() {
-//        view.openView("settings");
+        view.openView("settings");
     }
     @FXML public void logButtonPressed() {}
     @FXML public void sendButtonPressed() {
-//        String content = messageTextField.getText();
-
+        String content = messageTextField.getText();
+        viewModel.send(content);
+        messageTextField.clear();
     }
-    @FXML public void sendButtonOnEnterPressed() {}
+    @FXML public void sendButtonOnEnterPressed() {
+        sendButtonPressed();
+    }
 
     public Region getRoot()
     {

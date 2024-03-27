@@ -14,6 +14,8 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   private ChatModel chatModel;
   private ChatServer server;
   private Socket socket;
+  private Gson gson;
+  private HeartbeatListener heartbeatListener;
 
 
   public ChatClientHandler(Socket socket, ChatModel chatModel, ChatServer server){
@@ -23,6 +25,11 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
       this.ip = socket.getInetAddress().getHostAddress();
       this.server = server;
       this.socket = socket;
+      this.gson = new Gson();
+      heartbeatListener = new HeartbeatListener(this);
+      Thread heartbeatListenerThread = new Thread(heartbeatListener, "HBListener");
+      heartbeatListenerThread.setDaemon(true);
+      heartbeatListenerThread.start();
     }
     catch(IOException e){
       e.printStackTrace();
@@ -38,17 +45,30 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   }
   @Override public void run()
   {
-    boolean running = true;
-    Gson gson = new Gson();
-    while(running){
+//    boolean running = true;
+
+    while(true){
+      if (socket.isClosed()){
+        server.userDisconnected(this);
+        break;
+      }
       try{
         String incoming = in.readLine();
-        if(incoming.equals("/online")){
-          //out.println(server.getHandlersSize());
+        if(incoming == null || incoming.isEmpty()){
+          out.println("Received an empty message. Ignoring...");
         }
-        else if (incoming.equals("")||incoming == null)
-        {
-          out.println("You cannot send empty message!");
+        else if (incoming.equals("/online")){
+          server.handlersSize();
+          out.println("/online="+String.valueOf(chatModel.getConnectedUsers()));
+        }
+        else if (incoming.equals("/disconnect")){
+          server.userDisconnected(this);
+          socket.close();
+          System.out.println("server-cHandler disc user");
+          break;
+        }
+        else if (incoming.equals("heartbeat")){
+          heartbeatListener.registerBeat();
         }
         else{
           Message message = gson.fromJson(incoming, Message.class);
@@ -57,14 +77,10 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
           System.out.println(ip+"> "+message.toString());
           //System.out.println("Received a message from [" + message.getSender() + "]. Broadcasting...");
         }
-        if (socket.isClosed()){
-          server.userDisconnected(this);
-          running = false;
-          break;
-        }
       }
       catch (IOException e){
-        System.out.println("There was an error while receiving the message.");
+//        System.out.println("There was an error while receiving the message.");
+        System.out.println(e);
       }
     }
   }
@@ -73,8 +89,22 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   {
     if(evt.getPropertyName().equals("ADD")){
       Message m = (Message)evt.getNewValue();
-      out.println(m.toString());
+      String broadcasted = gson.toJson(m);
+      out.println(broadcasted);
 
+    }
+  }
+
+  public void closeSocket(){
+    try
+    {
+      socket.close();
+//      server.userDisconnected(this);
+      Thread.currentThread().interrupt();
+    }
+    catch (IOException e)
+    {
+      throw new RuntimeException(e);
     }
   }
 }

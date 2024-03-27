@@ -37,37 +37,40 @@ public class ChatViewModel implements PropertyChangeListener{
    this.onlineCountLabel.set(String.valueOf(model.getConnectedUsers()));
   }
 
-  public void loadFromModel(){
-    if(!messages.isEmpty()){
-      messages.clear();
-    }
-    for (int i = 0; i < model.getAllMessages().size(); i++) {
-      messages.add("{"+ TimestampManipulation.convertTimestampToDateTimeShort(model.getAllMessages().get(i).getTimestamp()) +
-          "} "+model.getAllMessages().get(i).getSender()+"> "+
-          model.getAllMessages().get(i).getContent());
-    }
-  }
+//  public void loadFromModel(){
+//    if(!messages.isEmpty()){
+//      messages.clear();
+//    }
+//    for (int i = 0; i < model.getMessages().size(); i++) {
+//      messages.add(getMessages().get(i).toString());
+//    }
+//  }
 
-  public void addMessage(Message m){
-    messages.add("{"+ TimestampManipulation.convertTimestampToDateTimeShort(m.getTimestamp()) +
-        "} "+m.getSender()+": "+
-        m.getContent());
-  }
+//  public void addMessage(Message m){
+//    messages.add("{"+ TimestampManipulation.convertTimestampToDateTimeShort(m.getTimestamp()) +
+//        "} "+m.getSender()+": "+
+//        m.getContent());
+//  }
 
   public static ObservableList<String> getMessages() {
     return messages;
   }
 
+  public void send(String content){
+    model.setCurrentMessage(content);
+  }
+
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-    if(evt.getPropertyName().equals("ADD")){
-      Message m = (Message) evt.getNewValue();
-      String messageString = "{"+TimestampManipulation.convertTimestampToDateTimeShort(m.getTimestamp())+"} "
-          +m.getSender()+": "+m.getContent();
-      Platform.runLater(()->messages.add(0,messageString));
-      //loadFromModel();
-      System.out.println("ChatViewModel->loaded from model (event)");
-      //addMessage(m);
+    switch (evt.getPropertyName()){
+      case "NEW":
+        Message m = (Message) evt.getNewValue();
+        String messageString = "{"+TimestampManipulation.convertTimestampToDateTimeShort(m.getTimestamp())+"} "
+            +m.getSender()+": "+m.getContent();
+        Platform.runLater(()->messages.add(0,messageString));
+        System.out.println("ChatViewModel->loaded from model (event)");
+        break;
     }
   }
 }
+

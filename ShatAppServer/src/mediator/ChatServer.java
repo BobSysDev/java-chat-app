@@ -62,6 +62,8 @@ public class ChatServer implements Runnable{
 
     public void userDisconnected(ChatClientHandler user){
         handlers.remove(user);
+//        System.out.println("Removed handler from the list. Current list size: " + handlers.size());
+        handlersSize();
     }
 
     @Override public void run()

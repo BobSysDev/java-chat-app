@@ -8,6 +8,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import viewmodel.ChatViewModel;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
 public class ChatViewController {
     private ViewHandler view;
     private Region root;
@@ -42,7 +46,16 @@ public class ChatViewController {
     @FXML public void settingsButtonPressed() {
 //        view.openView("settings");
     }
-    @FXML public void logButtonPressed() {}
+    @FXML public void logButtonPressed() {
+      try
+      {
+        Desktop.getDesktop().open(new File(".\\Logs"));
+      }
+      catch (IOException e)
+      {
+        throw new RuntimeException(e);
+      }
+    }
     @FXML public void sendButtonPressed() {
 //        String content = messageTextField.getText();
 

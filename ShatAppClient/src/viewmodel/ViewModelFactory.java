@@ -11,6 +11,7 @@ public class ViewModelFactory
 
   public ViewModelFactory(ChatModel model){
     this.chatViewModel = new ChatViewModel(model);
+    this.settingsViewModel = new SettingsViewModel(model);
 
   }
 

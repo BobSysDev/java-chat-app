@@ -55,7 +55,7 @@ public class MessageLog
     }
     BufferedWriter out = null;
     try{
-      String filename = "Log-"+TimestampManipulation.convertTimestampToDate(message.getTimestamp())+".log";
+      String filename = ".\\Logs\\Log-"+TimestampManipulation.convertTimestampToDate(message.getTimestamp())+".log";
       out = new BufferedWriter(new FileWriter(filename, true));
       out.write("["+TimestampManipulation.convertTimestampToTime(message.getTimestamp())+"]["+ip+"] "+message.getSender()+": "+message.getContent()+"\n"  );
     }

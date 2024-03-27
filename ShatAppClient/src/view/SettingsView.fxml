@@ -9,8 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<VBox prefHeight="201.0" prefWidth="373.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SettingsViewController">
+<VBox prefHeight="220.0" prefWidth="442.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SettingsViewController">
    <children>
       <HBox alignment="CENTER" prefHeight="50.0" prefWidth="600.0">
          <children>
@@ -25,12 +24,12 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Label text="Username:">
+                  <Label prefHeight="23.0" prefWidth="140.0" text="Username:">
                      <font>
                         <Font name="Comic Sans MS" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="usernameTextField" prefHeight="33.0" prefWidth="269.0" promptText="Input your username...">
+                  <TextField fx:id="usernameTextField" prefHeight="34.0" prefWidth="332.0" promptText="Input your username...">
                      <font>
                         <Font name="Comic Sans MS" size="16.0" />
                      </font>
@@ -42,12 +41,12 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="5.0">
                <children>
-                  <Label text="IP and port:">
+                  <Label prefHeight="23.0" prefWidth="122.0" text="IP and port:">
                      <font>
                         <Font name="Comic Sans MS" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="ipTextField" prefHeight="33.0" prefWidth="175.0" promptText="XXX.XXX.XXX.XXX">
+                  <TextField fx:id="ipTextField" prefHeight="34.0" prefWidth="201.0" promptText="XXX.XXX.XXX.XXX">
                      <font>
                         <Font name="Comic Sans MS" size="16.0" />
                      </font>
@@ -57,7 +56,7 @@
                         <Font name="Comic Sans MS Bold" size="16.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="portTextField" prefHeight="33.0" prefWidth="65.0" promptText="XXXX">
+                  <TextField fx:id="portTextField" prefHeight="34.0" prefWidth="103.0" promptText="XXXX">
                      <font>
                         <Font name="Comic Sans MS" size="16.0" />
                      </font>
@@ -80,6 +79,9 @@
                      </font>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>

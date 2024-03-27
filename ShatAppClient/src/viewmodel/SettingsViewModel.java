@@ -4,6 +4,9 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import mediator.MessageClient;
+
+import java.io.IOException;
 
 public class SettingsViewModel {
 
@@ -12,11 +15,14 @@ public class SettingsViewModel {
     private StringProperty ip;
     private IntegerProperty port;
 
+    private MessageClient messageClient;
+
     public SettingsViewModel(model.ChatModel chatModel) {
         this.chatModel = chatModel;
         this.username = new SimpleStringProperty();
         this.ip = new SimpleStringProperty();
         this.port= new SimpleIntegerProperty();
+        messageClient = null;
     }
 
     public StringProperty getUsernameProperty() {
@@ -34,14 +40,17 @@ public class SettingsViewModel {
 
     public void setUsername(String username) {
         this.username.set(username);
+        chatModel.setUsername(username);
     }
 
     public void setIp(String ip) {
         this.ip.set(ip);
+        chatModel.setServerIP(ip);
     }
 
     public void setPort(int port) {
         this.port.set(port);
+        chatModel.setPort(port);
     }
 
     public String getUsername() {
@@ -50,6 +59,15 @@ public class SettingsViewModel {
 
     public String getIp(){
         return ip.get();
+    }
+
+    public void connect() throws IOException
+    {
+        chatModel.disconnect();
+        if (messageClient == null){
+            messageClient = new MessageClient(chatModel);
+        }
+        chatModel.connect();
     }
 
 
