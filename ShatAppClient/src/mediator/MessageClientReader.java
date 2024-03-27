@@ -28,9 +28,16 @@ public class MessageClientReader implements Runnable
       try
       {
         String serverReply = in.readLine();
-        Message m = gson.fromJson(serverReply,Message.class);
-        System.out.println("Server> "+m.toString());
-        model.addToListMessage(m);
+        if (serverReply.contains("/online=")){
+          int online = Integer.parseInt(serverReply.split("=")[1]);
+          model.setConnectedUsers(online);
+        }
+        else{
+          Message m = gson.fromJson(serverReply,Message.class);
+          System.out.println("Server> "+m.toString());
+          model.addToListMessage(m);
+
+        }
         //messageClient.receive(serverReply);
       }
       catch (SocketException e){

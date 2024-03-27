@@ -58,7 +58,8 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
           out.println("Received an empty message. Ignoring...");
         }
         else if (incoming.equals("/online")){
-          //randomshit
+          server.handlersSize();
+          out.println("/online="+String.valueOf(chatModel.getConnectedUsers()));
         }
         else if (incoming.equals("/disconnect")){
           server.userDisconnected(this);

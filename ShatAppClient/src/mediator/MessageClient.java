@@ -122,6 +122,10 @@ public class MessageClient implements PropertyChangeListener
         dropConnection();
         System.out.println("disconnected");
         break;
+      case "REFRESH":
+        out.println("/online");
+        break;
+
     }
   }
     
