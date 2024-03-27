@@ -38,7 +38,7 @@ public class SettingsViewController
     public void applyButtonPressed() {
         String username = viewModel.getUsername();
         String ip = viewModel.getIp();
-        IntegerProperty port = viewModel.getPort();
+        int port = viewModel.getPort().get();
 
         viewModel.setUsername(username);
         viewModel.setIp(ip);

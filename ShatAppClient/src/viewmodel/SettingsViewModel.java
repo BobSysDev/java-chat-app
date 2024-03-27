@@ -39,7 +39,7 @@ public class SettingsViewModel {
 
     public void setIp(String ip) {
         this.ip.set(ip);
-        chatModel.setIp(ip);
+        chatModel.setServerIP(ip);
     }
 
     public void setPort(int port) {

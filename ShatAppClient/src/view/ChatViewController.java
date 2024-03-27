@@ -16,9 +16,9 @@ public class ChatViewController
 
     @FXML private ListView<String> chatList;
     @FXML private Label onlineCountLabel;
-    // @FXML private TextField messageTextField;
-    //@FXML private Button sendButton;
-    //@FXML private Button settingsButton;
+    @FXML private TextField messageTextField;
+    @FXML private Button sendButton;
+    @FXML private Button settingsButton;
 
     public void init(ViewHandler view, ChatViewModel viewModel, Region root) {
         this.view = view;
@@ -46,9 +46,11 @@ public class ChatViewController
     @FXML public void logButtonPressed() {}
     @FXML public void sendButtonPressed() {
         String content = messageTextField.getText();
-        viewModel.viewModelSend(content);
+        viewModel.send(content);
     }
-    @FXML public void sendButtonOnEnterPressed() {}
+    @FXML public void sendButtonOnEnterPressed() {
+        sendButtonPressed();
+    }
 
     public Region getRoot()
     {
