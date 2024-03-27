@@ -60,6 +60,10 @@ public class MessageClient implements PropertyChangeListener
       messageReader.start();
       running = true;
       sendWelcomeMessage();
+
+      Thread heartbeatThread = new Thread(new Heartbeat(this), "heartbeat");
+      heartbeatThread.setDaemon(true);
+      heartbeatThread.start();
     }
     catch(ConnectException e){
       System.out.println("Error: Could not establish connection with the server. Check input and try again...");
@@ -95,6 +99,7 @@ public class MessageClient implements PropertyChangeListener
     out.println(jsonConnect);
   }
 
+
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     switch (evt.getPropertyName()){
@@ -113,6 +118,12 @@ public class MessageClient implements PropertyChangeListener
         break;
 
     }
+    
+  public boolean isRunning(){
+    return running;
+  }
 
+  public void sendHeartbeat(){
+    out.println("heartbeat");
   }
 }
