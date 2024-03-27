@@ -1,5 +1,7 @@
 package mediator;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,10 +11,12 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 import com.google.gson.Gson;
+import model.ChatModel;
+import model.ChatModelManager;
 import model.Message;
 import model.TimestampManipulation;
 
-public class MessageClient
+public class MessageClient implements PropertyChangeListener
 {
   private Socket socket;
   private BufferedReader in;
@@ -21,10 +25,12 @@ public class MessageClient
   private Scanner input;
   private boolean running;
   private String receivedString;
+  private ChatModel model;
 
   private String username;
 
-  public MessageClient(String username) throws IOException {
+  public MessageClient(ChatModel model) throws IOException {
+
     socket = null;
     in = null;
     out = null;
@@ -32,13 +38,15 @@ public class MessageClient
     this.input = new Scanner(System.in);
     this.running = true;
 
-    this.username = username;
+    this.model = model;
+    this.username = this.model.getUsername();
+    this.model.addListener(this);
   }
 
-  public void setUsername(String username)
-  {
-    this.username = username;
-  }
+//  //public void setUsername(String username)
+//  {
+//    this.username = username;
+//  }
 
   public void connect(String serverIp, int port){
     try{
@@ -47,7 +55,7 @@ public class MessageClient
       in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       out = new PrintWriter(socket.getOutputStream(), true);
       System.out.println("Connected to " + serverIp + ":" + port);
-      Thread messageReader = new Thread(new MessageClientReader(this, in), "messageReader");
+      Thread messageReader = new Thread(new MessageClientReader(this, in,model), "messageReader");
       messageReader.setDaemon(true);
       messageReader.start();
       running = true;
@@ -79,8 +87,7 @@ public class MessageClient
     }
   }
 
-  public void sendMessage(String text){
-    Message message = new Message(text, username);
+  public void sendMessage(Message message){
     String payload = gson.toJson(message);
     out.println(payload);
   }
@@ -92,6 +99,26 @@ public class MessageClient
     out.println(jsonConnect);
   }
 
+
+  @Override public void propertyChange(PropertyChangeEvent evt)
+  {
+    switch (evt.getPropertyName()){
+      case "SEND":
+        Message m = (Message)evt.getNewValue();
+        sendMessage(m);
+        System.out.println("send");
+        break;
+      case "CONNECT":
+        connect(model.getServerIP(), model.getPort());
+        System.out.println("connect");
+        break;
+      case "DISCONNECT":
+        dropConnection();
+        System.out.println("disconnected");
+        break;
+
+    }
+    
   public boolean isRunning(){
     return running;
   }

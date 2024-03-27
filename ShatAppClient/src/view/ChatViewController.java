@@ -24,9 +24,9 @@ public class ChatViewController
         this.view = view;
         this.root = root;
         this.viewModel = viewModel;
-        this.messageTextField.setVisible(false);
-        this.sendButton.setVisible(false);
-        this.settingsButton.setVisible(false);
+        //this.messageTextField.setVisible(false);
+        //this.sendButton.setVisible(false);
+        //this.settingsButton.setVisible(false);
         this.chatList.setItems(viewModel.getMessages());
         this.onlineCountLabel.textProperty().bind(viewModel.getOnlineCountLabel());
     }
@@ -41,14 +41,16 @@ public class ChatViewController
         viewModel.refresh();
     }
     @FXML public void settingsButtonPressed() {
-//        view.openView("settings");
+        view.openView("settings");
     }
     @FXML public void logButtonPressed() {}
     @FXML public void sendButtonPressed() {
-//        String content = messageTextField.getText();
-
+        String content = messageTextField.getText();
+        viewModel.send(content);
     }
-    @FXML public void sendButtonOnEnterPressed() {}
+    @FXML public void sendButtonOnEnterPressed() {
+        sendButtonPressed();
+    }
 
     public Region getRoot()
     {

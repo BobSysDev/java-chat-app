@@ -1,4 +1,8 @@
 package mediator;
+import com.google.gson.Gson;
+import model.ChatModel;
+import model.Message;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -8,10 +12,14 @@ public class MessageClientReader implements Runnable
 {
   private MessageClient messageClient;
   private BufferedReader in;
+  private ChatModel model;
+  private Gson gson;
 
-  public MessageClientReader(MessageClient messageClient, BufferedReader in){
+  public MessageClientReader(MessageClient messageClient, BufferedReader in, ChatModel model){
     this.messageClient = messageClient;
     this.in = in;
+    this.model = model;
+    this.gson = new Gson();
   }
 
   @Override public void run()
@@ -20,7 +28,9 @@ public class MessageClientReader implements Runnable
       try
       {
         String serverReply = in.readLine();
-        System.out.println("Server> "+serverReply);
+        Message m = gson.fromJson(serverReply,Message.class);
+        System.out.println("Server> "+m.toString());
+        model.addToListMessage(m);
         //messageClient.receive(serverReply);
       }
       catch (SocketException e){

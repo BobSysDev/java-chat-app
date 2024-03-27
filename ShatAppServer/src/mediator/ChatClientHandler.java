@@ -14,6 +14,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   private ChatModel chatModel;
   private ChatServer server;
   private Socket socket;
+  private Gson gson;
   private HeartbeatListener heartbeatListener;
 
 
@@ -24,6 +25,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
       this.ip = socket.getInetAddress().getHostAddress();
       this.server = server;
       this.socket = socket;
+      this.gson = new Gson();
       heartbeatListener = new HeartbeatListener(this);
       Thread heartbeatListenerThread = new Thread(heartbeatListener, "HBListener");
       heartbeatListenerThread.setDaemon(true);
@@ -43,23 +45,22 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   }
   @Override public void run()
   {
-    Gson gson = new Gson();
+    boolean running = true;
+
     while(true){
       if (socket.isClosed()){
         break;
       }
-
       try{
         String incoming = in.readLine();
-        if(incoming.equals("/online")){
-          //out.println(server.getHandlersSize());
+        if(incoming.isEmpty()){
+          out.println("You cannot send empty message!");
+        }
+        else if (incoming.equals("/online")){
+          //randomshit
         }
         else if (incoming.equals("heartbeat")){
           heartbeatListener.registerBeat();
-        }
-        else if (incoming.equals("") || incoming == null)
-        {
-          out.println("You cannot send empty message!");
         }
         else{
           Message message = gson.fromJson(incoming, Message.class);
@@ -79,7 +80,8 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   {
     if(evt.getPropertyName().equals("ADD")){
       Message m = (Message)evt.getNewValue();
-      out.println(m.toString());
+      String broadcasted = gson.toJson(m);
+      out.println(broadcasted);
 
     }
   }

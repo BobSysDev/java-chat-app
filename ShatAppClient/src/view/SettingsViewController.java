@@ -1,11 +1,14 @@
 package view;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
 import utility.IntStringConverter;
 import viewmodel.SettingsViewModel;
+
+import java.io.IOException;
 
 public class SettingsViewController
 {
@@ -34,7 +37,16 @@ public class SettingsViewController
     }
 
     @FXML
-    public void applyButtonPressed() {
+    public void applyButtonPressed() throws IOException
+    {
+        String username = viewModel.getUsername();
+        String ip = viewModel.getIp();
+        int port = viewModel.getPort().get();
+
+        viewModel.setUsername(username);
+        viewModel.setIp(ip);
+        viewModel.setPort(port);
+        viewModel.connect();
         view.openView("chat");
     }
 
