@@ -48,9 +48,10 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
     boolean running = true;
 
     while(true){
-      if (socket.isClosed()){
-        break;
-      }
+//      if (socket.isClosed()){
+//        server.userDisconnected(this);
+//        break;
+//      }
       try{
         String incoming = in.readLine();
         if(incoming.isEmpty()){
@@ -58,6 +59,11 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
         }
         else if (incoming.equals("/online")){
           //randomshit
+        }
+        else if (incoming.equals("/disconnect")){
+          server.userDisconnected(this);
+          socket.close();
+          System.out.println("server-cHandler disc user");
         }
         else if (incoming.equals("heartbeat")){
           heartbeatListener.registerBeat();

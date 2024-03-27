@@ -50,20 +50,24 @@ public class MessageClient implements PropertyChangeListener
 
   public void connect(String serverIp, int port){
     try{
-      System.out.println("Attempting to connect...");
-      socket = new Socket(serverIp, port);
-      in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-      out = new PrintWriter(socket.getOutputStream(), true);
-      System.out.println("Connected to " + serverIp + ":" + port);
-      Thread messageReader = new Thread(new MessageClientReader(this, in,model), "messageReader");
-      messageReader.setDaemon(true);
-      messageReader.start();
-      running = true;
-      sendWelcomeMessage();
+      if(!model.isRunning()){
+        System.out.println("Attempting to connect...");
+        socket = new Socket(serverIp, port);
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        out = new PrintWriter(socket.getOutputStream(), true);
+        System.out.println("Connected to " + serverIp + ":" + port);
+        Thread messageReader = new Thread(new MessageClientReader(this, in,model), "messageReader");
+        messageReader.setDaemon(true);
+        messageReader.start();
+        running = true;
+        model.setRunning(true);
+        sendWelcomeMessage();
 
-      Thread heartbeatThread = new Thread(new Heartbeat(this), "heartbeat");
-      heartbeatThread.setDaemon(true);
-      heartbeatThread.start();
+        Thread heartbeatThread = new Thread(new Heartbeat(this), "heartbeat");
+        heartbeatThread.setDaemon(true);
+        heartbeatThread.start();
+      }
+
     }
     catch(ConnectException e){
       System.out.println("Error: Could not establish connection with the server. Check input and try again...");
@@ -77,9 +81,11 @@ public class MessageClient implements PropertyChangeListener
   public void dropConnection(){
     try
     {
+      out.println("/disconnect");
       socket.close();
       System.out.println("The server is not responding. Try reconnecting...");
       running = false;
+      model.setRunning(false);
     }
     catch (IOException e)
     {
@@ -116,8 +122,8 @@ public class MessageClient implements PropertyChangeListener
         dropConnection();
         System.out.println("disconnected");
         break;
-
     }
+  }
     
   public boolean isRunning(){
     return running;

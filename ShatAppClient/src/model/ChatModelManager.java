@@ -14,6 +14,7 @@ public class ChatModelManager implements ChatModel, UnnamedPropertyChangeSubject
     private String serverIP;
     private int port;
     private int connectedUsers;
+    private boolean running;
 
     //private MessageLog messageLog;
 
@@ -23,11 +24,13 @@ public class ChatModelManager implements ChatModel, UnnamedPropertyChangeSubject
         //this.messageLog = MessageLog.getInstance();
         this.messages = new ArrayList<>();
         this.propertyChangeSupport = new PropertyChangeSupport(this);
+        this.running = false;
     }
 
     @Override
     public void addToListMessage(Message message){
         this.messages.add(message);
+        propertyChangeSupport.firePropertyChange("NEW",null,message);
     }
 
     @Override
@@ -102,6 +105,15 @@ public class ChatModelManager implements ChatModel, UnnamedPropertyChangeSubject
         propertyChangeSupport.firePropertyChange("DISCONNECT",null,null);
     }
 
+    @Override public void setRunning(boolean running)
+    {
+        this.running = running;
+    }
+
+    @Override public boolean isRunning()
+    {
+        return running;
+    }
 
     public void addListener(java.beans.PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);

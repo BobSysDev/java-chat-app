@@ -37,14 +37,14 @@ public class ChatViewModel implements PropertyChangeListener{
    this.onlineCountLabel.set(String.valueOf(model.getConnectedUsers()));
   }
 
-  public void loadFromModel(){
-    if(!messages.isEmpty()){
-      messages.clear();
-    }
-    for (int i = 0; i < model.getMessages().size(); i++) {
-      messages.add(getMessages().get(i).toString());
-    }
-  }
+//  public void loadFromModel(){
+//    if(!messages.isEmpty()){
+//      messages.clear();
+//    }
+//    for (int i = 0; i < model.getMessages().size(); i++) {
+//      messages.add(getMessages().get(i).toString());
+//    }
+//  }
 
 //  public void addMessage(Message m){
 //    messages.add("{"+ TimestampManipulation.convertTimestampToDateTimeShort(m.getTimestamp()) +
@@ -62,14 +62,15 @@ public class ChatViewModel implements PropertyChangeListener{
 
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-//    if(evt.getPropertyName().equals("ADD")){
-//      Message m = (Message) evt.getNewValue();
-//      String messageString = "{"+TimestampManipulation.convertTimestampToDateTimeShort(m.getTimestamp())+"} "
-//          +m.getSender()+": "+m.getContent();
-//      Platform.runLater(()->messages.add(0,messageString));
-//      //loadFromModel();
-//      System.out.println("ChatViewModel->loaded from model (event)");
-//      //addMessage(m);
+    switch (evt.getPropertyName()){
+      case "NEW":
+        Message m = (Message) evt.getNewValue();
+        String messageString = "{"+TimestampManipulation.convertTimestampToDateTimeShort(m.getTimestamp())+"} "
+            +m.getSender()+": "+m.getContent();
+        Platform.runLater(()->messages.add(0,messageString));
+        System.out.println("ChatViewModel->loaded from model (event)");
+        break;
     }
+  }
 }
 
