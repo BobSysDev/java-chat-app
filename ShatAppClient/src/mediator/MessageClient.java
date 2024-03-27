@@ -100,7 +100,7 @@ public class MessageClient implements PropertyChangeListener
 
   private void sendWelcomeMessage(){
     System.out.println("Now you can chat with others!");
-    Message connected = new Message("<has connected!>", username);
+    Message connected = new Message("<has connected!>", model.getUsername());
     String jsonConnect = gson.toJson(connected);
     out.println(jsonConnect);
   }

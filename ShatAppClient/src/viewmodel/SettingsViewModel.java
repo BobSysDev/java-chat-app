@@ -15,11 +15,14 @@ public class SettingsViewModel {
     private StringProperty ip;
     private IntegerProperty port;
 
+    private MessageClient messageClient;
+
     public SettingsViewModel(model.ChatModel chatModel) {
         this.chatModel = chatModel;
         this.username = new SimpleStringProperty();
         this.ip = new SimpleStringProperty();
         this.port= new SimpleIntegerProperty();
+        messageClient = null;
     }
 
     public StringProperty getUsernameProperty() {
@@ -61,8 +64,8 @@ public class SettingsViewModel {
     public void connect() throws IOException
     {
         chatModel.disconnect();
-        if (!chatModel.isRunning()){
-            MessageClient messageClient = new MessageClient(chatModel);
+        if (messageClient == null){
+            messageClient = new MessageClient(chatModel);
         }
         chatModel.connect();
     }
