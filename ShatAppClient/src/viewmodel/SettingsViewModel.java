@@ -34,14 +34,17 @@ public class SettingsViewModel {
 
     public void setUsername(String username) {
         this.username.set(username);
+        chatModel.setUsername(username);
     }
 
     public void setIp(String ip) {
         this.ip.set(ip);
+        chatModel.setIp(ip);
     }
 
     public void setPort(int port) {
         this.port.set(port);
+        chatModel.setPort(port);
     }
 
     public String getUsername() {
