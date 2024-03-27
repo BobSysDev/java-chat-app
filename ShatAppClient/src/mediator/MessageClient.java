@@ -107,6 +107,11 @@ public class MessageClient implements PropertyChangeListener
         connect(model.getServerIP(), model.getPort());
         System.out.println("connect");
         break;
+      case "DISCONNECT":
+        dropConnection();
+        System.out.println("disconnected");
+        break;
+
     }
 
   }

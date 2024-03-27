@@ -97,6 +97,12 @@ public class ChatModelManager implements ChatModel, UnnamedPropertyChangeSubject
         propertyChangeSupport.firePropertyChange("CONNECT",null,null);
     }
 
+    @Override public void disconnect()
+    {
+        propertyChangeSupport.firePropertyChange("DISCONNECT",null,null);
+    }
+
+
     public void addListener(java.beans.PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }

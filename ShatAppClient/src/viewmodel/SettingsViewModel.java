@@ -60,7 +60,8 @@ public class SettingsViewModel {
 
     public void connect() throws IOException
     {
-        //MessageClient messageClient = new MessageClient(chatModel);
+        chatModel.disconnect();
+        MessageClient messageClient = new MessageClient(chatModel);
         chatModel.connect();
     }
 

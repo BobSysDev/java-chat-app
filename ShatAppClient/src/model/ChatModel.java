@@ -12,6 +12,7 @@ public interface ChatModel extends UnnamedPropertyChangeSubject
         String getIp();
 
         void connect();
+        void disconnect();
         ArrayList<Message> getMessages();
         Message getCurrentMessage();
         void setCurrentMessage(String content);
