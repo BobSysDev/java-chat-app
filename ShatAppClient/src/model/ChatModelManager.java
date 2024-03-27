@@ -44,6 +44,7 @@ public class ChatModelManager implements ChatModel, UnnamedPropertyChangeSubject
     public void setCurrentMessage(String content){
         Message m = new Message(content,getUsername());
         this.currentMessage = m;
+        propertyChangeSupport.firePropertyChange("SEND", null, getCurrentMessage());
     }
 
     @Override

@@ -14,6 +14,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   private ChatModel chatModel;
   private ChatServer server;
   private Socket socket;
+  private Gson gson;
 
 
   public ChatClientHandler(Socket socket, ChatModel chatModel, ChatServer server){
@@ -23,6 +24,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
       this.ip = socket.getInetAddress().getHostAddress();
       this.server = server;
       this.socket = socket;
+      this.gson = new Gson();
     }
     catch(IOException e){
       e.printStackTrace();
@@ -39,7 +41,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   @Override public void run()
   {
     boolean running = true;
-    Gson gson = new Gson();
+
     while(running){
       try{
         String incoming = in.readLine();
@@ -73,7 +75,8 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   {
     if(evt.getPropertyName().equals("ADD")){
       Message m = (Message)evt.getNewValue();
-      out.println(m.toString());
+      String broadcasted = gson.toJson(m);
+      out.println(broadcasted);
 
     }
   }

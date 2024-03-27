@@ -11,7 +11,7 @@ public class ClientTest
   {
     Scanner input = new Scanner(System.in);
     boolean running = true;
-    MessageClient messageClient = new MessageClient("Marius");
+    MessageClient messageClient = new MessageClient();
     messageClient.connect("192.168.85.252",5678);
 
 //    while(running){

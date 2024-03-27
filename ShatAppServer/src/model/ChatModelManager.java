@@ -45,59 +45,59 @@ public class ChatModelManager implements ChatModel{
         this.connectedUsers = n;
     }
 
-    @Override
-    public ArrayList<Message> getMessages() {
-        return null;
-    }
-
-    @Override
-    public Message getCurrentMessage() {
-        return null;
-    }
-
-    @Override
-    public void setCurrentMessage(Message message) {
-
-    }
-
-    @Override
-    public void addToListMessage(Message message) {
-
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public void setUsername(String username) {
-
-    }
-
-    @Override
-    public String getServerIP() {
-        return null;
-    }
-
-    @Override
-    public void setServerIP(String serverIP) {
-
-    }
-
-    @Override
-    public int getPort() {
-        return 0;
-    }
-
-    @Override
-    public void setPort(int port) {
-
-    }
-
-    @Override public String getIp()
-    {
-        return null;
-    }
+//    @Override
+//    public ArrayList<Message> getMessages() {
+//        return null;
+//    }
+//
+//    @Override
+//    public Message getCurrentMessage() {
+//        return null;
+//    }
+//
+//    @Override
+//    public void setCurrentMessage(Message message) {
+//
+//    }
+//
+//    @Override
+//    public void addToListMessage(Message message) {
+//
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return null;
+//    }
+//
+//    @Override
+//    public void setUsername(String username) {
+//
+//    }
+//
+//    @Override
+//    public String getServerIP() {
+//        return null;
+//    }
+//
+//    @Override
+//    public void setServerIP(String serverIP) {
+//
+//    }
+//
+//    @Override
+//    public int getPort() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void setPort(int port) {
+//
+//    }
+//
+//    @Override public String getIp()
+//    {
+//        return null;
+//    }
 
 }
