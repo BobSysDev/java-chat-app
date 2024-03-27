@@ -55,5 +55,9 @@ public class SettingsViewModel {
         return ip.get();
     }
 
+    public void connect(){
+        chatModel.connect();
+    }
+
 
 }

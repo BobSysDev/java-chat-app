@@ -92,6 +92,10 @@ public class ChatModelManager implements ChatModel, UnnamedPropertyChangeSubject
         return null;
     }
 
+    @Override public void connect()
+    {
+        propertyChangeSupport.firePropertyChange("CONNECT",null,null);
+    }
 
     public void addListener(java.beans.PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);

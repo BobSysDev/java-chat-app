@@ -43,7 +43,7 @@ public class SettingsViewController
         viewModel.setUsername(username);
         viewModel.setIp(ip);
         viewModel.setPort(port);
-
+        viewModel.connect();
         view.openView("chat");
     }
 

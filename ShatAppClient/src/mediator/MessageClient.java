@@ -29,7 +29,7 @@ public class MessageClient implements PropertyChangeListener
 
   private String username;
 
-  public MessageClient() throws IOException {
+  public MessageClient(ChatModel model) throws IOException {
     model.addListener(this);
     socket = null;
     in = null;
@@ -38,7 +38,7 @@ public class MessageClient implements PropertyChangeListener
     this.input = new Scanner(System.in);
     this.running = true;
 
-    this.model = new ChatModelManager();
+    this.model = model;
     this.username = model.getUsername();
   }
 
@@ -96,9 +96,14 @@ public class MessageClient implements PropertyChangeListener
 
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
-    if (evt.getPropertyName().equals("SEND")){
-      Message m = (Message)evt.getNewValue();
-      sendMessage(m);
+    switch (evt.getPropertyName()){
+      case "ADD":
+        Message m = (Message)evt.getNewValue();
+        sendMessage(m);
+        break;
+      case "SEND":
+        connect(model.getServerIP(), model.getPort());
     }
+
   }
 }

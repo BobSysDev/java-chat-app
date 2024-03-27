@@ -21,7 +21,7 @@ public class ViewHandler
 
     public void start(Stage primaryStage){
         this.primaryStage = primaryStage;
-        openView("chat");
+        openView("settings");
     }
 
     public void openView(String id){
