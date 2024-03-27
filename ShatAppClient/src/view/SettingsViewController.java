@@ -8,6 +8,8 @@ import javafx.scene.layout.Region;
 import utility.IntStringConverter;
 import viewmodel.SettingsViewModel;
 
+import java.io.IOException;
+
 public class SettingsViewController
 {
     private ViewHandler view;
@@ -35,7 +37,8 @@ public class SettingsViewController
     }
 
     @FXML
-    public void applyButtonPressed() {
+    public void applyButtonPressed() throws IOException
+    {
         String username = viewModel.getUsername();
         String ip = viewModel.getIp();
         int port = viewModel.getPort().get();

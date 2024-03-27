@@ -4,6 +4,9 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import mediator.MessageClient;
+
+import java.io.IOException;
 
 public class SettingsViewModel {
 
@@ -55,7 +58,9 @@ public class SettingsViewModel {
         return ip.get();
     }
 
-    public void connect(){
+    public void connect() throws IOException
+    {
+        //MessageClient messageClient = new MessageClient(chatModel);
         chatModel.connect();
     }
 
