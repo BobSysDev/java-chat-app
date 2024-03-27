@@ -82,6 +82,7 @@ public class ChatModelManager implements ChatModel, UnnamedPropertyChangeSubject
 
     @Override public int getConnectedUsers()
     {
+        propertyChangeSupport.firePropertyChange("REFRESH",null,null );
         return connectedUsers;
     }
 
