@@ -45,13 +45,13 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
   }
   @Override public void run()
   {
-    boolean running = true;
+//    boolean running = true;
 
     while(true){
-//      if (socket.isClosed()){
-//        server.userDisconnected(this);
-//        break;
-//      }
+      if (socket.isClosed()){
+        server.userDisconnected(this);
+        break;
+      }
       try{
         String incoming = in.readLine();
         if(incoming.isEmpty()){
@@ -64,6 +64,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
           server.userDisconnected(this);
           socket.close();
           System.out.println("server-cHandler disc user");
+          break;
         }
         else if (incoming.equals("heartbeat")){
           heartbeatListener.registerBeat();
@@ -77,7 +78,8 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
         }
       }
       catch (IOException e){
-        System.out.println("There was an error while receiving the message.");
+//        System.out.println("There was an error while receiving the message.");
+        System.out.println(e);
       }
     }
   }

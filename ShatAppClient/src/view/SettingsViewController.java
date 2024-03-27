@@ -39,9 +39,9 @@ public class SettingsViewController
     @FXML
     public void applyButtonPressed() throws IOException
     {
-        String username = viewModel.getUsername();
-        String ip = viewModel.getIp();
-        int port = viewModel.getPort().get();
+        String username = usernameTextField.getText();
+        String ip = ipTextField.getText();
+        int port = Integer.parseInt(portTextField.getText());
 
         viewModel.setUsername(username);
         viewModel.setIp(ip);

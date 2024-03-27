@@ -34,7 +34,8 @@ public class MessageClientReader implements Runnable
         //messageClient.receive(serverReply);
       }
       catch (SocketException e){
-        messageClient.dropConnection();
+//        messageClient.dropConnection();
+        System.out.println("Error: socket exception!");
         break;
       }
       catch (IOException e)
