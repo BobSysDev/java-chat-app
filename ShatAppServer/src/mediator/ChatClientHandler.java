@@ -45,12 +45,12 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
     while(running){
       try{
         String incoming = in.readLine();
-        if(incoming.equals("/online")){
-          //out.println(server.getHandlersSize());
-        }
-        else if (incoming.equals("")||incoming == null)
-        {
+        if(incoming.isEmpty()){
           out.println("You cannot send empty message!");
+        }
+        else if (incoming.equals("/online"))
+        {
+          //out.println(server.getHandlersSize());
         }
         else{
           Message message = gson.fromJson(incoming, Message.class);
@@ -59,6 +59,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
           System.out.println(ip+"> "+message.toString());
           //System.out.println("Received a message from [" + message.getSender() + "]. Broadcasting...");
         }
+
         if (socket.isClosed()){
           server.userDisconnected(this);
           running = false;
