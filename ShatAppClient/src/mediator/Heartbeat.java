@@ -2,7 +2,7 @@ package mediator;
 
 public class Heartbeat implements Runnable
 {
-  private static final int INTERVAL = 10000;
+  private static final int INTERVAL = 3000;
   private MessageClient client;
 
   public Heartbeat(MessageClient client){
@@ -14,6 +14,7 @@ public class Heartbeat implements Runnable
     while (client.isRunning())
     {
       client.sendHeartbeat();
+//      System.out.println("Pulse sent!");
       try
       {
         Thread.sleep(INTERVAL);

@@ -54,8 +54,8 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
       }
       try{
         String incoming = in.readLine();
-        if(incoming.isEmpty()){
-          out.println("You cannot send empty message!");
+        if(incoming == null || incoming.isEmpty()){
+          out.println("Received an empty message. Ignoring...");
         }
         else if (incoming.equals("/online")){
           //randomshit
@@ -98,7 +98,8 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
     try
     {
       socket.close();
-      server.userDisconnected(this);
+//      server.userDisconnected(this);
+      Thread.currentThread().interrupt();
     }
     catch (IOException e)
     {

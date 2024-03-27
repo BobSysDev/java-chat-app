@@ -6,7 +6,7 @@ public class HeartbeatListener implements Runnable
 {
   private ChatClientHandler clientHandler;
   private long lastBeatTimestamp;
-  private static final int MAX_INTERVAL = 20;
+  private static final int MAX_INTERVAL = 6;
 
   public HeartbeatListener(ChatClientHandler clientHandler){
     lastBeatTimestamp = TimestampManipulation.getCurrentTimestamp();
@@ -26,13 +26,15 @@ public class HeartbeatListener implements Runnable
       }
 
       if(TimestampManipulation.getCurrentTimestamp() - lastBeatTimestamp >= MAX_INTERVAL){
-        System.out.println("One of the clients timed out. Dropping connection...");
+//        System.out.println("One of the clients timed out. Dropping connection...");
         clientHandler.closeSocket();
+        break;
       }
     }
   }
 
   public synchronized void registerBeat(){
     lastBeatTimestamp = TimestampManipulation.getCurrentTimestamp();
+//    System.out.println("Pulse received!");
   }
 }
