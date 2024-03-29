@@ -22,6 +22,7 @@ public class ChatViewController {
     @FXML private TextField messageTextField;
     @FXML private Button sendButton;
     @FXML private Button settingsButton;
+    @FXML private Button logButton;
 
     public void init(ViewHandler view, ChatViewModel viewModel, Region root) {
         this.view = view;
