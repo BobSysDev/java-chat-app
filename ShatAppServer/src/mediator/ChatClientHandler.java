@@ -59,7 +59,7 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
         }
         else if (incoming.equals("/online")){
           server.handlersSize();
-          out.println("/online="+String.valueOf(chatModel.getConnectedUsers()));
+          out.println("/online="+chatModel.getConnectedUsers());
         }
         else if (incoming.equals("/disconnect")){
           server.userDisconnected(this);
