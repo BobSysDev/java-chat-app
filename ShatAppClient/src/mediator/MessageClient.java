@@ -99,7 +99,7 @@ public class MessageClient implements PropertyChangeListener
   }
 
   private void sendWelcomeMessage(){
-    System.out.println("Now you can chat with others!");
+    //System.out.println("Now you can chat with others!");
     Message connected = new Message("<has connected!>", model.getUsername());
     String jsonConnect = gson.toJson(connected);
     out.println(jsonConnect);
@@ -112,7 +112,7 @@ public class MessageClient implements PropertyChangeListener
       case "SEND":
         Message m = (Message)evt.getNewValue();
         sendMessage(m);
-        System.out.println("send");
+        //System.out.println("send");
         break;
       case "CONNECT":
         connect(model.getServerIP(), model.getPort());

@@ -38,7 +38,7 @@ public class ChatServer implements Runnable{
 
     private void execute(){
         while(true){
-            System.out.println("Waiting for a client...");
+            //System.out.println("Waiting for a client...");
             Socket socket = null;
             try{
                 socket = chatSocket.accept();

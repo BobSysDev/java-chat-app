@@ -34,7 +34,7 @@ public class MessageClientReader implements Runnable
         }
         else{
           Message m = gson.fromJson(serverReply,Message.class);
-          System.out.println("Server> "+m.toString());
+          //System.out.println("Server> "+m.toString());
           model.addToListMessage(m);
 
         }
