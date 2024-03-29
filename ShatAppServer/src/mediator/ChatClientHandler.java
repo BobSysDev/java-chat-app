@@ -78,9 +78,21 @@ public class ChatClientHandler implements Runnable, PropertyChangeListener{
           //System.out.println("Received a message from [" + message.getSender() + "]. Broadcasting...");
         }
       }
+      catch (SocketException e){
+        if(e.getMessage().equals("Connection reset")){
+          System.out.println("Something went wrong. Dropping Connection with a client...");
+          try
+          {
+            socket.close();
+          }
+          catch (IOException ex)
+          {
+            System.out.println("The socket might've been already closed");
+          }
+        }
+      }
       catch (IOException e){
-//        System.out.println("There was an error while receiving the message.");
-        System.out.println(e);
+        System.out.println("There was an error while receiving the message.");
       }
     }
   }
