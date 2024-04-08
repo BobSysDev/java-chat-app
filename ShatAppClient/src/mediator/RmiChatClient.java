@@ -21,12 +21,8 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
   private ChatModel model;
 
   public RmiChatClient(ChatModel model){
-    try{
-
-      this.model = model;
-      model.addListener(this);
-    }
-    catch (Exception e){e.printStackTrace();}
+    this.model = model;
+    model.addListener(this);
   }
 
   public void start(String host)
@@ -34,11 +30,12 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
       NotBoundException
   {
     server = (ChatRemoteModel) Naming.lookup("rmi://"+host+":1099/Chat");
-    server.addListener(this);
     UnicastRemoteObject.exportObject(this, 0);
+    server.addListener(this);
+
     server.join();//only for counting online  users
     String sender = model.getUsername();
-    server.send(new Message(sender+" has joined the chat!",sender));
+    server.send(new Message("-->has joined the chat!<--",sender));
   }
 
   public void disconnect() throws RemoteException
@@ -77,10 +74,10 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
           throw new RuntimeException(e);
         }
         break;
-      case "CONNECT ":
+      case "CONNECT":
         try {
+//          System.out.println("connect event");
           start(model.getServerIP());
-
         }
         catch (Exception e) {
           throw new RuntimeException(e);

@@ -1,6 +1,7 @@
 package mediator;
 import model.ChatModel;
 import model.Message;
+import model.TimestampManipulation;
 import utility.observer.listener.GeneralListener;
 import utility.observer.subject.PropertyChangeHandler;
 
@@ -49,6 +50,7 @@ public class RmiChatServer implements ChatRemoteModel
   public void send(Message m) throws ServerNotActiveException
   {
     String ip = RemoteServer.getClientHost();
+    m.setTimestamp(TimestampManipulation.getCurrentTimestamp());
     model.addMessageLog(m,ip);
     property.firePropertyChange("BROADCAST",null, m);
   }
