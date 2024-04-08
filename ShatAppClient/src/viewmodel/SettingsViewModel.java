@@ -78,10 +78,6 @@ public class SettingsViewModel {
     }
     public void connect() throws IOException
     {
-        chatModel.disconnect();
-//        if (messageClient == null){
-//            messageClient = new MessageClient(chatModel);
-//        }
         chatModel.connect();
     }
 

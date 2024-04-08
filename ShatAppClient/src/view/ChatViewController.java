@@ -1,5 +1,8 @@
 package view;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
+import javafx.stage.WindowEvent;
 import viewmodel.ChatViewModel;
 
 public class ChatViewController
@@ -38,6 +42,8 @@ public class ChatViewController
                 ev.consume();
             }
         });
+
+
     }
     public void reset()
     {
@@ -61,6 +67,12 @@ public class ChatViewController
     @FXML public void sendButtonOnEnterPressed() {
         sendButtonPressed();
     }
+
+//    @FXML
+//    public void exitApplication(ActionEvent event) {
+//        System.out.println("lol");
+//        Platform.exit();
+//    }
 
     public Region getRoot()
     {

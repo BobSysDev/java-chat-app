@@ -41,11 +41,6 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
     server.send(new Message("-->has joined the chat!<--",sender));
   }
 
-  public void disconnect() throws RemoteException
-  {
-    server.disconnect();
-  }
-
   @Override public void propertyChange(ObserverEvent<Message, Message> event)
       throws RemoteException
   {
@@ -89,12 +84,26 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
         break;
       case "WELCOME":
         try {
-          server.send(new Message("-->has joined (username change)<--",model.getUsername()));
+          server.send(new Message("-->has changed their username<--",model.getUsername()));
         }
         catch (Exception e) {
           throw new RuntimeException(e);
         }
         break;
+      case "DISCONNECT":
+        try {
+          server.send(new Message("-->has disconnected!(lame)<--",model.getUsername()));
+          server.disconnect();
+        }
+        catch (RemoteException e) {
+          throw new RuntimeException(e);
+        }
+        catch (ServerNotActiveException e)
+        {
+          throw new RuntimeException(e);
+        }
+        break;
+
 
     }
   }
