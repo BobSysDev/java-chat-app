@@ -35,6 +35,7 @@ public class MyApplication extends Application
       model.disconnect();
       System.out.println("Closing the window...");
       Platform.exit();
+      System.exit(0);
     };
     primaryStage.setOnCloseRequest(closeEventHandler);
 
