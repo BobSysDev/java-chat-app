@@ -11,6 +11,8 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -29,7 +31,8 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
       throws RemoteException, ServerNotActiveException, MalformedURLException,
       NotBoundException
   {
-    server = (ChatRemoteModel) Naming.lookup("rmi://"+host+":1099/Chat");
+    Registry registry = LocateRegistry.getRegistry(host, 1099);
+    server = (ChatRemoteModel) registry.lookup("Chat");
     UnicastRemoteObject.exportObject(this, 0);
     server.addListener(this);
 
