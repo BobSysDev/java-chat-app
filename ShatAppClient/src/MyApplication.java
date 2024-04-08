@@ -29,12 +29,7 @@ public class MyApplication extends Application
     //client.start();
     Runtime.getRuntime().addShutdownHook(new Thread(
         () -> {
-          try {
-            client.disconnect();
-          }
-          catch (RemoteException e) {
-            throw new RuntimeException(e);
-          }
+          System.out.println("BAJOJAJO");
         }, "Shutdown-thread"));
 
     //MessageClient messageClient = new MessageClient(model);

@@ -7,6 +7,7 @@ import utility.observer.subject.PropertyChangeHandler;
 
 import javax.swing.plaf.basic.BasicListUI;
 import java.net.MalformedURLException;
+import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -32,18 +33,24 @@ public class RmiChatServer implements ChatRemoteModel
     try
     {
       Registry reg = LocateRegistry.createRegistry(1099);
+      UnicastRemoteObject.exportObject(this, 0);
+      reg.bind("Chat", this);
       System.out.println("Reg. started.");
     }
     catch (java.rmi.server.ExportException e)
     {
       System.out.println("Registry already started? " + e.getMessage());
     }
+    catch (AlreadyBoundException e)
+    {
+      throw new RuntimeException(e);
+    }
   }
 
   public void startServer() throws RemoteException, MalformedURLException
   {
-    UnicastRemoteObject.exportObject(this, 0);
-    Naming.rebind("Chat", this);
+//    UnicastRemoteObject.exportObject(this, 0);
+//    Naming.rebind("Chat", this);
   }
 
 
