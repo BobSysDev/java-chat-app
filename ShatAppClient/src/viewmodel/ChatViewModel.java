@@ -60,6 +60,17 @@ public class ChatViewModel implements PropertyChangeListener{
     model.setCurrentMessage(content);
   }
 
+  public String getIp(){
+    return model.getServerIP();
+  }
+
+  public int getPort(){
+    return model.getPort();
+  }
+
+  public void setUsername(String username){
+    model.setUsername(username);
+  }
   @Override public void propertyChange(PropertyChangeEvent evt)
   {
     switch (evt.getPropertyName()){

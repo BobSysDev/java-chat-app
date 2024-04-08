@@ -48,6 +48,7 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
   {
     switch (event.getPropertyName()){
       case "BROADCAST" :
+        System.out.println("Broadcasting from server(event)");
         Message m = event.getValue2();
         model.addToListMessage(m);
         break;
@@ -83,6 +84,15 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
           throw new RuntimeException(e);
         }
         break;
+      case "WELCOME":
+        try {
+          server.send(new Message("-->has joined (username change)<--",model.getUsername()));
+        }
+        catch (Exception e) {
+          throw new RuntimeException(e);
+        }
+        break;
+
     }
   }
 }

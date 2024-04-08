@@ -43,10 +43,17 @@ public class SettingsViewController
         String ip = ipTextField.getText();
         int port = Integer.parseInt(portTextField.getText());
 
-        viewModel.setUsername(username);
-        viewModel.setIp(ip);
-        viewModel.setPort(port);
-        viewModel.connect();
+        if(ip.equals(viewModel.getModelIp())&&port==viewModel.getModelPort()){
+            viewModel.setUsername(username);
+            viewModel.usernameChange();
+        }
+        else{
+            viewModel.setUsername(username);
+            viewModel.setIp(ip);
+            viewModel.setPort(port);
+            viewModel.connect();
+
+        }
         view.openView("chat");
     }
 

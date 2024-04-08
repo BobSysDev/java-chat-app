@@ -53,6 +53,18 @@ public class SettingsViewModel {
         chatModel.setPort(port);
     }
 
+    public String getModelIp(){
+        return chatModel.getServerIP();
+    }
+
+    public int getModelPort(){
+        return chatModel.getPort();
+    }
+
+    public void setModelUsername(String username) {
+        chatModel.setUsername(username);
+    }
+
     public String getUsername() {
         return username.get();
     }
@@ -61,6 +73,9 @@ public class SettingsViewModel {
         return ip.get();
     }
 
+    public void usernameChange(){
+        chatModel.sendWelcomeMessage();
+    }
     public void connect() throws IOException
     {
         chatModel.disconnect();

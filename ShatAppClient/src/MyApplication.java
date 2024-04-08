@@ -27,6 +27,8 @@ public class MyApplication extends Application
 
     RmiChatClient client = new RmiChatClient(model);
     //client.start();
+
+
     Runtime.getRuntime().addShutdownHook(new Thread(
         () -> {
           try {

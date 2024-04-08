@@ -6,7 +6,9 @@ import utility.observer.listener.GeneralListener;
 import utility.observer.subject.PropertyChangeHandler;
 
 import javax.swing.plaf.basic.BasicListUI;
+import java.net.Inet4Address;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -42,6 +44,11 @@ public class RmiChatServer implements ChatRemoteModel
 
   public void startServer() throws RemoteException, MalformedURLException
   {
+    try
+    {
+      System.out.println(Inet4Address.getLocalHost().getHostAddress()+":1099");
+    }
+    catch (Exception e){e.printStackTrace();}
     UnicastRemoteObject.exportObject(this, 0);
     Naming.rebind("Chat", this);
   }
