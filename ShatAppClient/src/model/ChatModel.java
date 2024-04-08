@@ -11,6 +11,7 @@ public interface ChatModel extends UnnamedPropertyChangeSubject
         //void addMessageLog(Message message, String ip);
         String getIp();
 
+        void sendWelcomeMessage();
         void connect();
         void disconnect();
         void setRunning(boolean running);

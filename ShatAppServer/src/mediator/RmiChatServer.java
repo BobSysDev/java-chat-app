@@ -56,7 +56,6 @@ public class RmiChatServer implements ChatRemoteModel
 //    Naming.rebind("Chat", this);
 //  }
 
-
   public void send(Message m) throws ServerNotActiveException
   {
     String ip = RemoteServer.getClientHost();

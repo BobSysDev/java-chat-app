@@ -96,6 +96,11 @@ public class ChatModelManager implements ChatModel, UnnamedPropertyChangeSubject
         return null;
     }
 
+    @Override public void sendWelcomeMessage()
+    {
+        propertyChangeSupport.firePropertyChange("WELCOME", null, null);
+    }
+
     @Override public void connect()
     {
         propertyChangeSupport.firePropertyChange("CONNECT",null,null);
