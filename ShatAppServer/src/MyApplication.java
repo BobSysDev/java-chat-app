@@ -1,6 +1,6 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-import mediator.ChatServer;
+
 import mediator.RmiChatServer;
 import model.ChatModel;
 import model.ChatModelManager;

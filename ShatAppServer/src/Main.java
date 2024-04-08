@@ -1,5 +1,5 @@
 import javafx.application.Application;
-import mediator.ChatServer;
+
 
 import java.io.IOException;
 

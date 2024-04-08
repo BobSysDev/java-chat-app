@@ -1,6 +1,6 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-import mediator.MessageClient;
+
 import mediator.RmiChatClient;
 import model.ChatModel;
 import model.ChatModelManager;
@@ -23,10 +23,19 @@ public class MyApplication extends Application
     ViewHandler view = new ViewHandler(viewModelFactory);
     view.start(primaryStage);
 
-    RmiChatClient client = new RmiChatClient(model.getServerIP(),model.getPort());
-    client.start();
+    System.out.println(model.getServerIP());
+
+    RmiChatClient client = new RmiChatClient(model);
+    //client.start();
     Runtime.getRuntime().addShutdownHook(new Thread(
-        () -> client.disconnect(), "Shutdown-thread"));
+        () -> {
+          try {
+            client.disconnect();
+          }
+          catch (RemoteException e) {
+            throw new RuntimeException(e);
+          }
+        }, "Shutdown-thread"));
 
     //MessageClient messageClient = new MessageClient(model);
 //    messageClient.connect(model.getServerIP(),model.getPort());
