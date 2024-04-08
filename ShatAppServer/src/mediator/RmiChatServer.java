@@ -36,7 +36,7 @@ public class RmiChatServer implements ChatRemoteModel
     {
       Registry reg = LocateRegistry.createRegistry(1099);
       UnicastRemoteObject.exportObject(this, 0);
-      reg.bind("Chat", this);
+      Naming.rebind("Chat", this);
       System.out.println("Reg. started.");
       System.out.println(Inet4Address.getLocalHost().getHostAddress() + ":1099");
     }
@@ -44,7 +44,7 @@ public class RmiChatServer implements ChatRemoteModel
     {
       System.out.println("Registry already started? " + e.getMessage());
     }
-    catch (AlreadyBoundException | UnknownHostException e)
+    catch (UnknownHostException | MalformedURLException e)
     {
       throw new RuntimeException(e);
     }
