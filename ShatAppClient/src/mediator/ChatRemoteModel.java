@@ -11,4 +11,5 @@ public interface ChatRemoteModel extends Remote, RemoteSubject<Message, Message>
   void send(Message m) throws ServerNotActiveException;
   int getOnlineUsers();
   void join();
+  void disconnect();
 }

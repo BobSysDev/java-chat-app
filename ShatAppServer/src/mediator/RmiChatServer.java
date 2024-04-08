@@ -57,6 +57,11 @@ public class RmiChatServer implements ChatRemoteModel
     model.setConnectedUsers(model.getConnectedUsers()+1);
   }
 
+  @Override public void disconnect()
+  {
+    model.setConnectedUsers(model.getConnectedUsers()-1);
+  }
+
   @Override public int getOnlineUsers()
   {
     return model.getConnectedUsers();

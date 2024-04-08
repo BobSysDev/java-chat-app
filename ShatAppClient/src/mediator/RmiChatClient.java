@@ -18,9 +18,9 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
   private ChatRemoteModel server;
   private ChatModel model;
 
-  public RmiChatClient(String host){
+  public RmiChatClient(String host, int port){
     try{
-      server = (ChatRemoteModel) Naming.lookup("rmi://"+host+":1099/Chat");
+      server = (ChatRemoteModel) Naming.lookup("rmi://"+host+":"+port+"/Chat");
       UnicastRemoteObject.exportObject(this, 0);
       server.addListener(this);
       model.addListener(this);
@@ -33,6 +33,10 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
     server.join();
     String sender = model.getUsername();
     server.send(new Message(sender+" has joined the chat!",sender));
+  }
+
+  public void disconnect(){
+    server.disconnect();
   }
 
   @Override public void propertyChange(ObserverEvent<Message, Message> event)
@@ -51,6 +55,15 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
     switch (evt.getPropertyName()){
       case "REFRESH":
         model.setConnectedUsers(server.getOnlineUsers());
+        break;
+      case "SEND":
+        Message m = (Message)evt.getNewValue();
+        try {
+          server.send(m);
+        }
+        catch (ServerNotActiveException e) {
+          throw new RuntimeException(e);
+        }
     }
   }
 }
