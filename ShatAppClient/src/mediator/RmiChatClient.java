@@ -66,6 +66,9 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
         break;
       case "SEND":
         Message m = (Message)evt.getNewValue();
+        if(m.getContent() == null || m.getContent().isEmpty()){
+          break;
+        }
         try {
           server.send(m);
         }
@@ -92,7 +95,7 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
         break;
       case "DISCONNECT":
         try {
-          server.send(new Message("-->has disconnected!(lame)<--",model.getUsername()));
+          server.send(new Message("-->has disconnected! (lame)<--",model.getUsername()));
           server.disconnect();
         }
         catch (RemoteException e) {
