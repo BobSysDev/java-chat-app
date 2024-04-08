@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
 import mediator.ChatServer;
+import mediator.RmiChatServer;
 import model.ChatModel;
 import model.ChatModelManager;
 
@@ -21,10 +22,12 @@ public class MyApplication extends Application
     ViewHandler view = new ViewHandler(viewModelFactory);
     view.start(primaryStage);
 
-    ChatServer chatServer = new ChatServer(model,5678);
-    Thread thread = new Thread(chatServer);
-    thread.setDaemon(true);
-    thread.start();
+//    ChatServer chatServer = new ChatServer(model,5678);
+//    Thread thread = new Thread(chatServer);
+//    thread.setDaemon(true);
+//    thread.start();
+
+    RmiChatServer server = new RmiChatServer(model);
 
   }
 }
