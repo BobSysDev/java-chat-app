@@ -18,7 +18,6 @@ import java.rmi.server.ServerNotActiveException;
 public class MyApplication extends Application
 {
   public void start(Stage primaryStage)
-      throws RemoteException, ServerNotActiveException
   {
     ChatModel model = new ChatModelManager();
 
@@ -29,7 +28,6 @@ public class MyApplication extends Application
     System.out.println(model.getServerIP());
 
     RmiChatClient client = new RmiChatClient(model);
-    //client.start();
 
     EventHandler<WindowEvent> closeEventHandler = event -> {
       try

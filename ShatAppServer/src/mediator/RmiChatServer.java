@@ -24,11 +24,10 @@ public class RmiChatServer implements ChatRemoteModel
   private PropertyChangeHandler<Message, Message> property;
 
 
-  public RmiChatServer(ChatModel model) throws MalformedURLException, RemoteException{
+  public RmiChatServer(ChatModel model) throws RemoteException{
     this.model = model;
     this.property = new PropertyChangeHandler<>(this, true);
     startRegistry();
-//    startServer();
   }
 
   public void startRegistry()throws RemoteException {
@@ -49,12 +48,6 @@ public class RmiChatServer implements ChatRemoteModel
       throw new RuntimeException(e);
     }
   }
-
-//  public void startServer() throws RemoteException, MalformedURLException
-//  {
-//    UnicastRemoteObject.exportObject(this, 0);
-//    Naming.rebind("Chat", this);
-//  }
 
   public void send(Message m) throws ServerNotActiveException
   {

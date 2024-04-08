@@ -31,7 +31,6 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
       throws RemoteException, ServerNotActiveException, MalformedURLException,
       NotBoundException
   {
-//    Registry registry = LocateRegistry.getRegistry(host, 1099);
     server = (ChatRemoteModel) Naming.lookup("rmi://"+host+":1099/Chat");
     UnicastRemoteObject.exportObject(this, 0);
     server.addListener(this);
@@ -78,7 +77,6 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
         break;
       case "CONNECT":
         try {
-//          System.out.println("connect event");
           start(model.getServerIP());
         }
         catch (Exception e) {
@@ -98,11 +96,7 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
           server.send(new Message("-->has disconnected! (lame)<--",model.getUsername()));
           server.disconnect();
         }
-        catch (RemoteException e) {
-          throw new RuntimeException(e);
-        }
-        catch (ServerNotActiveException e)
-        {
+        catch (RemoteException | ServerNotActiveException e) {
           throw new RuntimeException(e);
         }
         break;

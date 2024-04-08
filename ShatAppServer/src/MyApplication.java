@@ -25,14 +25,7 @@ public class MyApplication extends Application
     ViewHandler view = new ViewHandler(viewModelFactory);
     view.start(primaryStage);
 
-
-//    ChatServer chatServer = new ChatServer(model,5678);
-//    Thread thread = new Thread(chatServer);
-//    thread.setDaemon(true);
-//    thread.start();
-
     RmiChatServer server = new RmiChatServer(model);
-
 
     EventHandler<WindowEvent> closeEventHandler = event -> {
       System.out.println("Closing the window...");
