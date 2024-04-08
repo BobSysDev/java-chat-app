@@ -11,6 +11,8 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.ServerNotActiveException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -38,11 +40,6 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
     server.send(new Message("-->has joined the chat!<--",sender));
   }
 
-  public void disconnect() throws RemoteException
-  {
-    server.disconnect();
-  }
-
   @Override public void propertyChange(ObserverEvent<Message, Message> event)
       throws RemoteException
   {
@@ -68,6 +65,9 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
         break;
       case "SEND":
         Message m = (Message)evt.getNewValue();
+        if(m.getContent() == null || m.getContent().isEmpty()){
+          break;
+        }
         try {
           server.send(m);
         }
@@ -77,7 +77,6 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
         break;
       case "CONNECT":
         try {
-//          System.out.println("connect event");
           start(model.getServerIP());
         }
         catch (Exception e) {
@@ -86,12 +85,22 @@ public class RmiChatClient implements RemoteListener<Message, Message>,
         break;
       case "WELCOME":
         try {
-          server.send(new Message("-->has joined (username change)<--",model.getUsername()));
+          server.send(new Message("-->has changed their username<--",model.getUsername()));
         }
         catch (Exception e) {
           throw new RuntimeException(e);
         }
         break;
+      case "DISCONNECT":
+        try {
+          server.send(new Message("-->has disconnected! (lame)<--",model.getUsername()));
+          server.disconnect();
+        }
+        catch (RemoteException | ServerNotActiveException e) {
+          throw new RuntimeException(e);
+        }
+        break;
+
 
     }
   }

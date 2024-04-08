@@ -8,7 +8,8 @@ import utility.observer.subject.PropertyChangeHandler;
 import javax.swing.plaf.basic.BasicListUI;
 import java.net.Inet4Address;
 import java.net.MalformedURLException;
-import java.net.Socket;
+import java.net.UnknownHostException;
+import java.rmi.AlreadyBoundException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -23,36 +24,30 @@ public class RmiChatServer implements ChatRemoteModel
   private PropertyChangeHandler<Message, Message> property;
 
 
-  public RmiChatServer(ChatModel model) throws MalformedURLException, RemoteException{
+  public RmiChatServer(ChatModel model) throws RemoteException{
     this.model = model;
     this.property = new PropertyChangeHandler<>(this, true);
     startRegistry();
-    startServer();
   }
 
   public void startRegistry()throws RemoteException {
     try
     {
       Registry reg = LocateRegistry.createRegistry(1099);
+      UnicastRemoteObject.exportObject(this, 0);
+      Naming.rebind("Chat", this);
       System.out.println("Reg. started.");
+      System.out.println(Inet4Address.getLocalHost().getHostAddress() + ":1099");
     }
     catch (java.rmi.server.ExportException e)
     {
       System.out.println("Registry already started? " + e.getMessage());
     }
-  }
-
-  public void startServer() throws RemoteException, MalformedURLException
-  {
-    try
+    catch (UnknownHostException | MalformedURLException e)
     {
-      System.out.println(Inet4Address.getLocalHost().getHostAddress()+":1099");
+      throw new RuntimeException(e);
     }
-    catch (Exception e){e.printStackTrace();}
-    UnicastRemoteObject.exportObject(this, 0);
-    Naming.rebind("Chat", this);
   }
-
 
   public void send(Message m) throws ServerNotActiveException
   {

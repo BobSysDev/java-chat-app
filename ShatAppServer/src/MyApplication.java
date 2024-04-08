@@ -1,6 +1,9 @@
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
+import javafx.stage.WindowEvent;
 import mediator.RmiChatServer;
 import model.ChatModel;
 import model.ChatModelManager;
@@ -22,12 +25,14 @@ public class MyApplication extends Application
     ViewHandler view = new ViewHandler(viewModelFactory);
     view.start(primaryStage);
 
-//    ChatServer chatServer = new ChatServer(model,5678);
-//    Thread thread = new Thread(chatServer);
-//    thread.setDaemon(true);
-//    thread.start();
-
     RmiChatServer server = new RmiChatServer(model);
+
+    EventHandler<WindowEvent> closeEventHandler = event -> {
+      System.out.println("Closing the window...");
+      Platform.exit();
+      System.exit(0);
+    };
+    primaryStage.setOnCloseRequest(closeEventHandler);
 
   }
 }

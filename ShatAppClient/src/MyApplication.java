@@ -1,6 +1,9 @@
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
+import javafx.stage.WindowEvent;
 import mediator.RmiChatClient;
 import model.ChatModel;
 import model.ChatModelManager;
@@ -15,7 +18,6 @@ import java.rmi.server.ServerNotActiveException;
 public class MyApplication extends Application
 {
   public void start(Stage primaryStage)
-      throws RemoteException, ServerNotActiveException
   {
     ChatModel model = new ChatModelManager();
 
@@ -26,28 +28,23 @@ public class MyApplication extends Application
     System.out.println(model.getServerIP());
 
     RmiChatClient client = new RmiChatClient(model);
-    //client.start();
 
-
-    Runtime.getRuntime().addShutdownHook(new Thread(
-        () -> {
-          try {
-            client.disconnect();
-          }
-          catch (RemoteException e) {
-            throw new RuntimeException(e);
-          }
-        }, "Shutdown-thread"));
-
-    //MessageClient messageClient = new MessageClient(model);
-//    messageClient.connect(model.getServerIP(),model.getPort());
-
-
-
-//    ChatServer chatServer = new ChatServer(model,5678);
-//    Thread thread = new Thread(chatServer);
-//    thread.setDaemon(true);
-//    thread.start();
+    EventHandler<WindowEvent> closeEventHandler = event -> {
+      try
+      {
+        model.disconnect();
+      }
+      catch (Exception e){
+        System.out.println("There is no connection to the server...");
+      }
+      finally
+      {
+        System.out.println("Closing the window...");
+        Platform.exit();
+        System.exit(0);
+      }
+    };
+    primaryStage.setOnCloseRequest(closeEventHandler);
 
   }
 }

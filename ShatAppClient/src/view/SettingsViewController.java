@@ -34,6 +34,8 @@ public class SettingsViewController
 
         IntStringConverter converter = new IntStringConverter();
         Bindings.bindBidirectional(portTextField.textProperty(),viewModel.getPort(), converter);
+        portTextField.setDisable(true);
+        portTextField.setText("1099");
     }
 
     @FXML
