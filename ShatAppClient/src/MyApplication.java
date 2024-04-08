@@ -32,10 +32,19 @@ public class MyApplication extends Application
     //client.start();
 
     EventHandler<WindowEvent> closeEventHandler = event -> {
-      model.disconnect();
-      System.out.println("Closing the window...");
-      Platform.exit();
-      System.exit(0);
+      try
+      {
+        model.disconnect();
+      }
+      catch (Exception e){
+        System.out.println("There is no connection to the server...");
+      }
+      finally
+      {
+        System.out.println("Closing the window...");
+        Platform.exit();
+        System.exit(0);
+      }
     };
     primaryStage.setOnCloseRequest(closeEventHandler);
 
